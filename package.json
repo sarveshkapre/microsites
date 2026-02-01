@@ -1,0 +1,13 @@
+{
+  "name": "microsites",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "echo \"Add apps under apps/ then wire up a task runner (turbo/nx).\"",
+    "build": "echo \"Add apps under apps/ then wire up a task runner (turbo/nx).\""
+  }
+}
+
