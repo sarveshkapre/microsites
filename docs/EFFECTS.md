@@ -6,7 +6,7 @@ This document lists the microsites/effects in this repo and what each one demons
 - `apps/gallery`: index site linking to each demo + notes on effects/perf.
 
 ## Planned
-- `premium-product`: pinned sections, subtle parallax, scroll-driven reveals
+- `premium-product`: pinned sections, subtle parallax, scroll-driven reveals (building)
 - `editorial-scrolly`: chapter scrollytelling, sticky media, text-driven transitions
 - `neon-cinematic`: layered motion, dramatic timing, optional shader/particle accents
 - `playful-micro`: micro-interactions, cursor/hover “physics”, delightful UI details

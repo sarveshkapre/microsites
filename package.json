@@ -12,6 +12,9 @@
     "lint": "npm run lint -w gallery",
     "dev:gallery": "npm run dev -w gallery",
     "build:gallery": "npm run build -w gallery",
-    "lint:gallery": "npm run lint -w gallery"
+    "lint:gallery": "npm run lint -w gallery",
+    "dev:premium-product": "npm run dev -w premium-product",
+    "build:premium-product": "npm run build -w premium-product",
+    "lint:premium-product": "npm run lint -w premium-product"
   }
 }

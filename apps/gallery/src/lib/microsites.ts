@@ -24,7 +24,7 @@ export const microsites: Microsite[] = [
     title: "Premium Product Scroll",
     description: "Pinned sections, subtle parallax, scroll-driven reveals.",
     stack: ["Next.js", "Tailwind", "GSAP/ScrollTrigger", "Lenis (optional)"],
-    status: "planned",
+    status: "building",
     repoPath: "apps/premium-product",
   },
   {
@@ -68,4 +68,3 @@ export const microsites: Microsite[] = [
     repoPath: "apps/dataviz-scrolly",
   },
 ];
-

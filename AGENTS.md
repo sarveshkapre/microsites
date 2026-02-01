@@ -16,6 +16,5 @@
 ## Repo conventions
 - Keep `README.md` current (what exists, how to run).
 - Keep `CHANGELOG.md` updated for every meaningful change.
-- Keep `chat_context.md` as a lightweight conversation log / requirements history.
 - Prefer adding new microsites as `apps/<name>/`.
 - Use properly-licensed assets only; track third‑party licenses in `docs/LICENSES.md`.

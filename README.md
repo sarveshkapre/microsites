@@ -27,6 +27,7 @@ npm run dev
 The default dev script runs the gallery app. For explicit targeting:
 ```bash
 npm run dev:gallery
+npm run dev:premium-product
 ```
 
 ## Rules of the road
