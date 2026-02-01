@@ -18,8 +18,18 @@ This repo intentionally **does not clone** real websites. Each demo is an origin
 - `packages/` — shared UI/utilities/config (as needed)
 - `docs/` — effect catalog, perf notes, asset/license tracking
 
+## Getting started
+```bash
+npm install
+npm run dev
+```
+
+The default dev script runs the gallery app. For explicit targeting:
+```bash
+npm run dev:gallery
+```
+
 ## Rules of the road
 - Respect `prefers-reduced-motion` in every demo.
 - Keep performance budgets tight (no always-on heavy effects).
 - Use your own assets or properly licensed ones; document them.
-

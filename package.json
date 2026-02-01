@@ -6,8 +6,12 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "echo \"Add apps under apps/ then wire up a task runner (turbo/nx).\"",
-    "build": "echo \"Add apps under apps/ then wire up a task runner (turbo/nx).\""
+    "dev": "npm run dev -w gallery",
+    "build": "npm run build -w gallery",
+    "start": "npm run start -w gallery",
+    "lint": "npm run lint -w gallery",
+    "dev:gallery": "npm run dev -w gallery",
+    "build:gallery": "npm run build -w gallery",
+    "lint:gallery": "npm run lint -w gallery"
   }
 }
-

@@ -7,6 +7,7 @@
 ## How we’re building it
 - Structure: monorepo with multiple apps under `apps/` + shared code under `packages/`.
 - A `gallery` app links to each microsite; each microsite builds/deploys independently.
+- Package manager: currently using `npm` workspaces (can switch to `pnpm` later if desired).
 - Each microsite should ship:
   - `prefers-reduced-motion` support (and ideally a manual toggle)
   - a simple “perf mode” switch (cap DPR / disable heavy layers / pause offscreen)
@@ -18,4 +19,3 @@
 - Keep `chat_context.md` as a lightweight conversation log / requirements history.
 - Prefer adding new microsites as `apps/<name>/`.
 - Use properly-licensed assets only; track third‑party licenses in `docs/LICENSES.md`.
-
