@@ -7,7 +7,7 @@ This document lists the microsites/effects in this repo and what each one demons
 
 ## Planned
 - `premium-product`: pinned sections, subtle parallax, scroll-driven reveals (building)
-- `editorial-scrolly`: chapter scrollytelling, sticky media, text-driven transitions
+- `editorial-scrolly`: chapter scrollytelling, sticky media, text-driven transitions (building)
 - `neon-cinematic`: layered motion, dramatic timing, optional shader/particle accents
 - `playful-micro`: micro-interactions, cursor/hover “physics”, delightful UI details
 - `webgl-dom-sync`: 3D scene reacts to scroll while DOM stays readable

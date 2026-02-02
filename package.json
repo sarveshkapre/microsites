@@ -15,6 +15,9 @@
     "lint:gallery": "npm run lint -w gallery",
     "dev:premium-product": "npm run dev -w premium-product",
     "build:premium-product": "npm run build -w premium-product",
-    "lint:premium-product": "npm run lint -w premium-product"
+    "lint:premium-product": "npm run lint -w premium-product",
+    "dev:editorial-scrolly": "npm run dev -w editorial-scrolly",
+    "build:editorial-scrolly": "npm run build -w editorial-scrolly",
+    "lint:editorial-scrolly": "npm run lint -w editorial-scrolly"
   }
 }

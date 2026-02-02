@@ -17,6 +17,7 @@ This repo intentionally **does not clone** real websites. Each demo is an origin
 - `apps/` — standalone microsites (deploy independently)
 - `packages/` — shared UI/utilities/config (as needed)
 - `docs/` — effect catalog, perf notes, asset/license tracking
+  - `docs/DEPLOY.md` — deployment notes (Vercel/Netlify/Pages)
 
 ## Getting started
 ```bash
@@ -28,6 +29,7 @@ The default dev script runs the gallery app. For explicit targeting:
 ```bash
 npm run dev:gallery
 npm run dev:premium-product
+npm run dev:editorial-scrolly
 ```
 
 ## Rules of the road

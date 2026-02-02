@@ -32,7 +32,7 @@ export const microsites: Microsite[] = [
     title: "Editorial Scrollytelling",
     description: "Chapter-based narrative with sticky media panels.",
     stack: ["Next.js or Vite", "Tailwind", "ScrollTrigger or IO"],
-    status: "planned",
+    status: "building",
     repoPath: "apps/editorial-scrolly",
   },
   {
