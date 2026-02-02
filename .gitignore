@@ -6,4 +6,5 @@ node_modules
 dist
 .turbo
 .next
-
+out
+.pages-dist

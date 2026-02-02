@@ -17,6 +17,8 @@ export type Microsite = {
 };
 
 export const repoUrl = "https://github.com/sarveshkapre/microsites" as const;
+export const pagesBaseUrl =
+  "https://sarveshkapre.github.io/microsites" as const;
 
 export const microsites: Microsite[] = [
   {
@@ -26,6 +28,7 @@ export const microsites: Microsite[] = [
     stack: ["Next.js", "Tailwind", "GSAP/ScrollTrigger", "Lenis (optional)"],
     status: "building",
     repoPath: "apps/premium-product",
+    deployUrl: `${pagesBaseUrl}/premium-product/`,
   },
   {
     id: "editorial-scrolly",
@@ -34,6 +37,7 @@ export const microsites: Microsite[] = [
     stack: ["Next.js or Vite", "Tailwind", "ScrollTrigger or IO"],
     status: "building",
     repoPath: "apps/editorial-scrolly",
+    deployUrl: `${pagesBaseUrl}/editorial-scrolly/`,
   },
   {
     id: "neon-cinematic",
@@ -42,6 +46,7 @@ export const microsites: Microsite[] = [
     stack: ["Vite", "React", "Tailwind", "GSAP", "Optional shaders/particles"],
     status: "building",
     repoPath: "apps/neon-cinematic",
+    deployUrl: `${pagesBaseUrl}/neon-cinematic/`,
   },
   {
     id: "playful-micro",
@@ -50,6 +55,7 @@ export const microsites: Microsite[] = [
     stack: ["Vite", "React", "Framer Motion"],
     status: "building",
     repoPath: "apps/playful-micro",
+    deployUrl: `${pagesBaseUrl}/playful-micro/`,
   },
   {
     id: "webgl-dom-sync",
@@ -58,6 +64,7 @@ export const microsites: Microsite[] = [
     stack: ["Next.js", "react-three-fiber", "drei"],
     status: "building",
     repoPath: "apps/webgl-dom-sync",
+    deployUrl: `${pagesBaseUrl}/webgl-dom-sync/`,
   },
   {
     id: "dataviz-scrolly",
@@ -66,5 +73,6 @@ export const microsites: Microsite[] = [
     stack: ["Vite", "React", "D3 or Recharts"],
     status: "building",
     repoPath: "apps/dataviz-scrolly",
+    deployUrl: `${pagesBaseUrl}/dataviz-scrolly/`,
   },
 ];
