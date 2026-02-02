@@ -33,6 +33,7 @@ npm run dev:editorial-scrolly
 npm run dev:neon-cinematic
 npm run dev:playful-micro
 npm run dev:webgl-dom-sync
+npm run dev:dataviz-scrolly
 ```
 
 ## Rules of the road

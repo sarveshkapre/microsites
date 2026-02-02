@@ -18,6 +18,7 @@ jobs:
           - neon-cinematic
           - playful-micro
           - webgl-dom-sync
+          - dataviz-scrolly
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

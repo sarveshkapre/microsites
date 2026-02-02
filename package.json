@@ -27,6 +27,9 @@
     "lint:playful-micro": "npm run lint -w playful-micro",
     "dev:webgl-dom-sync": "npm run dev -w webgl-dom-sync",
     "build:webgl-dom-sync": "npm run build -w webgl-dom-sync",
-    "lint:webgl-dom-sync": "npm run lint -w webgl-dom-sync"
+    "lint:webgl-dom-sync": "npm run lint -w webgl-dom-sync",
+    "dev:dataviz-scrolly": "npm run dev -w dataviz-scrolly",
+    "build:dataviz-scrolly": "npm run build -w dataviz-scrolly",
+    "lint:dataviz-scrolly": "npm run lint -w dataviz-scrolly"
   }
 }

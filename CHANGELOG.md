@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `apps/neon-cinematic`: Vite long-scroll “neon cinematic” demo.
 - `apps/playful-micro`: Framer Motion micro-interactions demo.
 - `apps/webgl-dom-sync`: react-three-fiber scroll-synced 3D + readable DOM demo.
+- `apps/dataviz-scrolly`: sticky chart + chapter scrollytelling demo (Recharts).
 
 ## [0.1.0] - 2026-02-01
 ### Added

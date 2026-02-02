@@ -11,4 +11,4 @@ This document lists the microsites/effects in this repo and what each one demons
 - `neon-cinematic`: layered motion, dramatic timing, optional shader/particle accents (building)
 - `playful-micro`: micro-interactions, cursor/hover “physics”, delightful UI details (building)
 - `webgl-dom-sync`: 3D scene reacts to scroll while DOM stays readable (building)
-- `dataviz-scrolly`: charts that morph across scroll “chapters” with annotations
+- `dataviz-scrolly`: charts that morph across scroll “chapters” with annotations (building)
