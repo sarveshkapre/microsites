@@ -2,6 +2,12 @@
 
 This repo is organized as a monorepo. Each microsite under `apps/<name>` is designed to be deployed independently.
 
+## GitHub Pages (current)
+This repo deploys a combined static site to GitHub Pages via `.github/workflows/pages.yml`.
+
+- Build script: `scripts/build-pages.mjs`
+- Live URL: `https://sarveshkapre.github.io/microsites/`
+
 ## Vercel (recommended)
 Create one Vercel project per app.
 

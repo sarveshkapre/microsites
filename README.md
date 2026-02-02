@@ -39,6 +39,7 @@ npm run dev:dataviz-scrolly
 ## Deploy (GitHub Pages)
 - Workflow: `.github/workflows/pages.yml`
 - Local build: `npm run build:pages` (outputs to `.pages-dist/`)
+- Live: `https://sarveshkapre.github.io/microsites/`
 
 ## Rules of the road
 - Respect `prefers-reduced-motion` in every demo.
