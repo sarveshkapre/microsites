@@ -48,7 +48,7 @@ export const microsites: Microsite[] = [
     title: "Playful Micro-interactions",
     description: "Delightful cursor/hover interactions and UI toys.",
     stack: ["Vite", "React", "Framer Motion"],
-    status: "planned",
+    status: "building",
     repoPath: "apps/playful-micro",
   },
   {

@@ -16,6 +16,7 @@ jobs:
           - premium-product
           - editorial-scrolly
           - neon-cinematic
+          - playful-micro
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

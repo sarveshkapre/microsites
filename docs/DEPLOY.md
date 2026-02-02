@@ -19,6 +19,7 @@ For each project:
 - `apps/premium-product`
 - `apps/editorial-scrolly`
 - `apps/neon-cinematic`
+- `apps/playful-micro`
 
 After you deploy, add the public URL to the gallery in `apps/gallery/src/lib/microsites.ts`.
 

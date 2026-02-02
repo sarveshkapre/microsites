@@ -21,6 +21,9 @@
     "lint:editorial-scrolly": "npm run lint -w editorial-scrolly",
     "dev:neon-cinematic": "npm run dev -w neon-cinematic",
     "build:neon-cinematic": "npm run build -w neon-cinematic",
-    "lint:neon-cinematic": "npm run lint -w neon-cinematic"
+    "lint:neon-cinematic": "npm run lint -w neon-cinematic",
+    "dev:playful-micro": "npm run dev -w playful-micro",
+    "build:playful-micro": "npm run build -w playful-micro",
+    "lint:playful-micro": "npm run lint -w playful-micro"
   }
 }
