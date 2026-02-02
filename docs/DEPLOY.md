@@ -20,6 +20,7 @@ For each project:
 - `apps/editorial-scrolly`
 - `apps/neon-cinematic`
 - `apps/playful-micro`
+- `apps/webgl-dom-sync`
 
 After you deploy, add the public URL to the gallery in `apps/gallery/src/lib/microsites.ts`.
 

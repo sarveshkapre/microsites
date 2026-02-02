@@ -24,6 +24,9 @@
     "lint:neon-cinematic": "npm run lint -w neon-cinematic",
     "dev:playful-micro": "npm run dev -w playful-micro",
     "build:playful-micro": "npm run build -w playful-micro",
-    "lint:playful-micro": "npm run lint -w playful-micro"
+    "lint:playful-micro": "npm run lint -w playful-micro",
+    "dev:webgl-dom-sync": "npm run dev -w webgl-dom-sync",
+    "build:webgl-dom-sync": "npm run build -w webgl-dom-sync",
+    "lint:webgl-dom-sync": "npm run lint -w webgl-dom-sync"
   }
 }

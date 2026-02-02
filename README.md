@@ -32,6 +32,7 @@ npm run dev:premium-product
 npm run dev:editorial-scrolly
 npm run dev:neon-cinematic
 npm run dev:playful-micro
+npm run dev:webgl-dom-sync
 ```
 
 ## Rules of the road

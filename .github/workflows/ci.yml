@@ -17,6 +17,7 @@ jobs:
           - editorial-scrolly
           - neon-cinematic
           - playful-micro
+          - webgl-dom-sync
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

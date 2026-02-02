@@ -56,7 +56,7 @@ export const microsites: Microsite[] = [
     title: "WebGL + DOM Sync",
     description: "Scroll-driven 3D scene with readable DOM content.",
     stack: ["Next.js", "react-three-fiber", "drei"],
-    status: "planned",
+    status: "building",
     repoPath: "apps/webgl-dom-sync",
   },
   {
