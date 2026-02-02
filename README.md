@@ -30,6 +30,7 @@ The default dev script runs the gallery app. For explicit targeting:
 npm run dev:gallery
 npm run dev:premium-product
 npm run dev:editorial-scrolly
+npm run dev:neon-cinematic
 ```
 
 ## Rules of the road

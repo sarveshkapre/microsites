@@ -18,6 +18,9 @@
     "lint:premium-product": "npm run lint -w premium-product",
     "dev:editorial-scrolly": "npm run dev -w editorial-scrolly",
     "build:editorial-scrolly": "npm run build -w editorial-scrolly",
-    "lint:editorial-scrolly": "npm run lint -w editorial-scrolly"
+    "lint:editorial-scrolly": "npm run lint -w editorial-scrolly",
+    "dev:neon-cinematic": "npm run dev -w neon-cinematic",
+    "build:neon-cinematic": "npm run build -w neon-cinematic",
+    "lint:neon-cinematic": "npm run lint -w neon-cinematic"
   }
 }

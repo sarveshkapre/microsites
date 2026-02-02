@@ -15,6 +15,7 @@ jobs:
           - gallery
           - premium-product
           - editorial-scrolly
+          - neon-cinematic
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,4 +28,3 @@ jobs:
         run: npm run lint -w ${{ matrix.workspace }}
       - name: Build
         run: npm run build -w ${{ matrix.workspace }}
-

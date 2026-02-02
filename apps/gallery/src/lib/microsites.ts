@@ -40,7 +40,7 @@ export const microsites: Microsite[] = [
     title: "Neon Cinematic Long-Scroll",
     description: "Layered motion with dramatic timing (tight perf budgets).",
     stack: ["Vite", "React", "Tailwind", "GSAP", "Optional shaders/particles"],
-    status: "planned",
+    status: "building",
     repoPath: "apps/neon-cinematic",
   },
   {

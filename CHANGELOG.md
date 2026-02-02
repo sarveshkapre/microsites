@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `apps/gallery`: Next.js gallery app scaffold + initial UI.
 - `apps/premium-product`: first demo app (pinned product layout + ScrollTrigger steps).
 - `apps/editorial-scrolly`: sticky media + chapter scrollytelling demo.
+- `apps/neon-cinematic`: Vite long-scroll “neon cinematic” demo.
 
 ## [0.1.0] - 2026-02-01
 ### Added
