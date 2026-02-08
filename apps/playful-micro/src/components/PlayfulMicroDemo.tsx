@@ -42,6 +42,8 @@ export function PlayfulMicroDemo() {
     boolean | null
   >(null);
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
+  const [perfMode, setPerfMode] = useState(false);
+  const spotlightEnabled = !reducedMotion && !perfMode;
 
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
@@ -49,7 +51,7 @@ export function PlayfulMicroDemo() {
   const cursorYSpring = useSpring(cursorY, { stiffness: 180, damping: 22 });
 
   useEffect(() => {
-    if (reducedMotion) return;
+    if (!spotlightEnabled) return;
 
     const onMove = (e: PointerEvent) => {
       cursorX.set(e.clientX);
@@ -58,7 +60,7 @@ export function PlayfulMicroDemo() {
 
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
-  }, [cursorX, cursorY, reducedMotion]);
+  }, [cursorX, cursorY, spotlightEnabled]);
 
   const magneticRef = useRef<HTMLButtonElement | null>(null);
   const [magneticOffset, setMagneticOffset] = useState({ x: 0, y: 0 });
@@ -70,9 +72,10 @@ export function PlayfulMicroDemo() {
     const rect = el.getBoundingClientRect();
     const dx = e.clientX - (rect.left + rect.width / 2);
     const dy = e.clientY - (rect.top + rect.height / 2);
+    const multiplier = perfMode ? 0.1 : 0.15;
     setMagneticOffset({
-      x: clamp(dx * 0.15, -18, 18),
-      y: clamp(dy * 0.15, -12, 12),
+      x: clamp(dx * multiplier, -14, 14),
+      y: clamp(dy * multiplier, -10, 10),
     });
   };
 
@@ -87,10 +90,14 @@ export function PlayfulMicroDemo() {
     } as unknown as CSSProperties;
   }, [cursorXSpring, cursorYSpring]);
 
+  const hoverLift = perfMode ? -2 : -4;
+  const hoverShift = perfMode ? 1 : 2;
+  const tapScale = perfMode ? 0.99 : 0.98;
+
   return (
     <MotionConfig reducedMotion={reducedMotion ? "always" : "never"}>
       <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white text-zinc-950 dark:from-black dark:to-zinc-950 dark:text-zinc-50">
-        {!reducedMotion ? (
+        {spotlightEnabled ? (
           <motion.div
             aria-hidden
             className="pointer-events-none fixed inset-0 z-0"
@@ -128,6 +135,16 @@ export function PlayfulMicroDemo() {
                   Reduced motion
                 </label>
 
+                <label className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
+                  <input
+                    type="checkbox"
+                    className="accent-zinc-900 dark:accent-white"
+                    checked={perfMode}
+                    onChange={(e) => setPerfMode(e.target.checked)}
+                  />
+                  Perf mode
+                </label>
+
                 <a
                   href={repoUrl}
                   target="_blank"
@@ -160,6 +177,7 @@ export function PlayfulMicroDemo() {
                   <li>Transforms/opacity only</li>
                   <li>Keep motion subtle by default</li>
                   <li>Always provide a reduced-motion path</li>
+                  <li>Perf mode removes decorative spotlight</li>
                 </ul>
               </div>
             </div>
@@ -170,7 +188,7 @@ export function PlayfulMicroDemo() {
               <motion.div
                 key={card.title}
                 className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950"
-                whileHover={reducedMotion ? undefined : { y: -4 }}
+                whileHover={reducedMotion ? undefined : { y: hoverLift }}
                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
               >
                 <div className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
@@ -193,7 +211,7 @@ export function PlayfulMicroDemo() {
                       card.title === "Magnetic CTA" ? onMagneticLeave : undefined
                     }
                     className="relative inline-flex items-center justify-center rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-zinc-900/10 dark:bg-white dark:text-black dark:ring-white/20"
-                    whileTap={{ scale: 0.98 }}
+                    whileTap={{ scale: tapScale }}
                     animate={
                       card.title === "Magnetic CTA" && !reducedMotion
                         ? { x: magneticOffset.x, y: magneticOffset.y }
@@ -208,7 +226,7 @@ export function PlayfulMicroDemo() {
                     href="#"
                     onClick={(e) => e.preventDefault()}
                     className="text-sm font-medium text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-400"
-                    whileHover={reducedMotion ? undefined : { x: 2 }}
+                    whileHover={reducedMotion ? undefined : { x: hoverShift }}
                     transition={{ type: "spring", stiffness: 260, damping: 22 }}
                   >
                     Secondary
@@ -219,8 +237,8 @@ export function PlayfulMicroDemo() {
           </section>
 
           <section className="mt-10 rounded-3xl border border-zinc-200 bg-white p-6 text-sm leading-6 text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-            Next: add a “quirky cursor” variant, a tooltip system, and a small
-            component API so these patterns can be copy/pasted into other demos.
+            Next: add a tooltip system and a small component API so these
+            patterns can be copy/pasted into other demos.
           </section>
         </div>
       </div>

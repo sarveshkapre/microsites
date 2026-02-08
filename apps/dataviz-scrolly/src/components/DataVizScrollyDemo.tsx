@@ -77,6 +77,7 @@ export function DataVizScrollyDemo() {
     boolean | null
   >(null);
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
+  const [perfMode, setPerfMode] = useState(false);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const chapterRefs = useRef<Array<HTMLElement | null>>([]);
@@ -131,6 +132,16 @@ export function DataVizScrollyDemo() {
                   onChange={(e) => setReducedMotionOverride(e.target.checked)}
                 />
                 Reduced motion
+              </label>
+
+              <label className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
+                <input
+                  type="checkbox"
+                  className="accent-zinc-900 dark:accent-white"
+                  checked={perfMode}
+                  onChange={(e) => setPerfMode(e.target.checked)}
+                />
+                Perf mode
               </label>
 
               <a
@@ -207,13 +218,13 @@ export function DataVizScrollyDemo() {
                       itemStyle={{ color: "rgba(255,255,255,0.9)" }}
                     />
                     <Line
-                      type="monotone"
+                      type={perfMode ? "linear" : "monotone"}
                       dataKey="y"
                       stroke={active.color}
-                      strokeWidth={3}
+                      strokeWidth={perfMode ? 2.5 : 3}
                       dot={false}
-                      isAnimationActive={!reducedMotion}
-                      animationDuration={450}
+                      isAnimationActive={!reducedMotion && !perfMode}
+                      animationDuration={perfMode ? 200 : 450}
                     />
                   </LineChart>
                 </ResponsiveContainer>
@@ -223,7 +234,7 @@ export function DataVizScrollyDemo() {
                 <div className="font-semibold">Implementation note</div>
                 <div className="mt-1">
                   Chapter activation uses IntersectionObserver. Animation is
-                  disabled when reduced motion is enabled.
+                  disabled when reduced motion or perf mode is enabled.
                 </div>
               </div>
             </div>
@@ -266,6 +277,7 @@ export function DataVizScrollyDemo() {
                   {[
                     { k: "Chart", v: "Line (single series)" },
                     { k: "Motion", v: reducedMotion ? "Reduced" : "Standard" },
+                    { k: "Performance", v: perfMode ? "Perf mode" : "Standard" },
                   ].map((row) => (
                     <div
                       key={row.k}
@@ -285,7 +297,7 @@ export function DataVizScrollyDemo() {
 
             <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-sm leading-6 text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
               Next: add annotations (callouts), multiple series, and a “focus
-              band” highlight on active ranges.
+              band” highlight on active ranges with low-cost fallbacks.
             </div>
           </div>
         </section>
@@ -293,4 +305,3 @@ export function DataVizScrollyDemo() {
     </div>
   );
 }
-

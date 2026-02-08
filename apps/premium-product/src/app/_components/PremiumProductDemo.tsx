@@ -60,6 +60,7 @@ export function PremiumProductDemo() {
     boolean | null
   >(null);
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
+  const [perfMode, setPerfMode] = useState(false);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const stepsRef = useRef<Array<HTMLElement | null>>([]);
@@ -129,6 +130,16 @@ export function PremiumProductDemo() {
                 Reduced motion
               </label>
 
+              <label className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
+                <input
+                  type="checkbox"
+                  className="accent-zinc-900 dark:accent-white"
+                  checked={perfMode}
+                  onChange={(e) => setPerfMode(e.target.checked)}
+                />
+                Perf mode
+              </label>
+
               <Link
                 href={repoUrl}
                 target="_blank"
@@ -191,7 +202,8 @@ export function PremiumProductDemo() {
 
                 <div
                   className={[
-                    "pointer-events-none absolute inset-0 opacity-70 blur-2xl transition-opacity duration-700",
+                    "pointer-events-none absolute inset-0 opacity-70 transition-opacity",
+                    perfMode ? "blur-xl duration-200" : "blur-2xl duration-700",
                     reducedMotion ? "opacity-40" : "opacity-70",
                   ].join(" ")}
                 >
@@ -202,12 +214,12 @@ export function PremiumProductDemo() {
                 <div
                   className={[
                     "pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/60 to-transparent dark:from-black/30",
-                    reducedMotion ? "" : "transition-transform duration-700",
+                    reducedMotion || perfMode ? "" : "transition-transform duration-700",
                   ].join(" ")}
                   style={{
                     transform: reducedMotion
                       ? undefined
-                      : `translateY(${Math.max(0, (3 - activeIndex) * 4)}px)`,
+                      : `translateY(${Math.max(0, (3 - activeIndex) * (perfMode ? 2 : 4))}px)`,
                   }}
                 />
               </div>
@@ -279,6 +291,10 @@ export function PremiumProductDemo() {
                       k: "Motion",
                       v: reducedMotion ? "Reduced" : "Standard",
                     },
+                    {
+                      k: "Performance",
+                      v: perfMode ? "Perf mode" : "Standard",
+                    },
                   ].map((row) => (
                     <div
                       key={row.k}
@@ -307,8 +323,8 @@ export function PremiumProductDemo() {
             ))}
 
             <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-sm leading-6 text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-              Next: add Lenis smoothing (optional), a perf toggle, and a more
-              image-forward hero — while keeping reduced-motion solid.
+              Next: add Lenis smoothing (optional) and a more image-forward
+              hero while keeping reduced-motion and perf-mode behavior solid.
             </div>
           </div>
         </section>

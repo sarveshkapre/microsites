@@ -66,6 +66,7 @@ export function EditorialScrollyDemo() {
     boolean | null
   >(null);
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
+  const [perfMode, setPerfMode] = useState(false);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const chapterRefs = useRef<Array<HTMLElement | null>>([]);
@@ -133,6 +134,16 @@ export function EditorialScrollyDemo() {
                 Reduced motion
               </label>
 
+              <label className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
+                <input
+                  type="checkbox"
+                  className="accent-zinc-900 dark:accent-white"
+                  checked={perfMode}
+                  onChange={(e) => setPerfMode(e.target.checked)}
+                />
+                Perf mode
+              </label>
+
               <Link
                 href={repoUrl}
                 target="_blank"
@@ -187,12 +198,16 @@ export function EditorialScrollyDemo() {
                   className={[
                     "relative aspect-[4/3] bg-gradient-to-br",
                     active.gradient,
+                    perfMode ? "saturate-75" : "",
                   ].join(" ")}
                 >
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.6),transparent_45%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.35),transparent_55%)] dark:bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.18),transparent_45%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.12),transparent_55%)]" />
+                  {!perfMode ? (
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.6),transparent_45%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.35),transparent_55%)] dark:bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.18),transparent_45%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.12),transparent_55%)]" />
+                  ) : null}
                   <div
                     className={[
-                      "absolute inset-0 transition-opacity duration-500",
+                      "absolute inset-0 transition-opacity",
+                      perfMode ? "duration-200" : "duration-500",
                       reducedMotion ? "" : "opacity-100",
                     ].join(" ")}
                   />
@@ -213,7 +228,9 @@ export function EditorialScrollyDemo() {
                           key={c.id}
                           className={[
                             "h-1.5 w-full overflow-hidden rounded-full border border-white/30 bg-white/35 dark:border-white/10 dark:bg-white/10",
-                            reducedMotion ? "" : "transition-colors duration-300",
+                            reducedMotion || perfMode
+                              ? ""
+                              : "transition-colors duration-300",
                           ].join(" ")}
                         >
                           <div
@@ -222,7 +239,9 @@ export function EditorialScrollyDemo() {
                               i <= activeIndex
                                 ? "bg-zinc-900/70 dark:bg-white/70"
                                 : "bg-transparent",
-                              reducedMotion ? "" : "transition-all duration-500",
+                              reducedMotion || perfMode
+                                ? ""
+                                : "transition-all duration-500",
                             ].join(" ")}
                             style={{
                               width:
@@ -291,6 +310,10 @@ export function EditorialScrollyDemo() {
                       k: "Motion",
                       v: reducedMotion ? "Reduced" : "Standard",
                     },
+                    {
+                      k: "Performance",
+                      v: perfMode ? "Perf mode" : "Standard",
+                    },
                   ].map((row) => (
                     <div
                       key={row.k}
@@ -310,7 +333,8 @@ export function EditorialScrollyDemo() {
 
             <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-sm leading-6 text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
               Next: replace the gradient “media” with images/video and add
-              narrative annotations — keeping it readable and fast.
+              narrative annotations while keeping it readable, fast, and
+              perf-mode friendly.
             </div>
           </div>
         </section>
