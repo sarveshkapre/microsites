@@ -14,6 +14,10 @@ export type Microsite = {
   status: MicrositeStatus;
   repoPath: `apps/${string}`;
   deployUrl?: string;
+  capabilities: {
+    reducedMotion: boolean;
+    perfMode: boolean;
+  };
 };
 
 export const repoUrl = "https://github.com/sarveshkapre/microsites" as const;
@@ -29,6 +33,10 @@ export const microsites: Microsite[] = [
     status: "ready",
     repoPath: "apps/premium-product",
     deployUrl: `${pagesBaseUrl}/premium-product/`,
+    capabilities: {
+      reducedMotion: true,
+      perfMode: true,
+    },
   },
   {
     id: "editorial-scrolly",
@@ -38,6 +46,10 @@ export const microsites: Microsite[] = [
     status: "ready",
     repoPath: "apps/editorial-scrolly",
     deployUrl: `${pagesBaseUrl}/editorial-scrolly/`,
+    capabilities: {
+      reducedMotion: true,
+      perfMode: true,
+    },
   },
   {
     id: "neon-cinematic",
@@ -47,6 +59,10 @@ export const microsites: Microsite[] = [
     status: "ready",
     repoPath: "apps/neon-cinematic",
     deployUrl: `${pagesBaseUrl}/neon-cinematic/`,
+    capabilities: {
+      reducedMotion: true,
+      perfMode: true,
+    },
   },
   {
     id: "playful-micro",
@@ -56,6 +72,10 @@ export const microsites: Microsite[] = [
     status: "ready",
     repoPath: "apps/playful-micro",
     deployUrl: `${pagesBaseUrl}/playful-micro/`,
+    capabilities: {
+      reducedMotion: true,
+      perfMode: true,
+    },
   },
   {
     id: "webgl-dom-sync",
@@ -65,6 +85,10 @@ export const microsites: Microsite[] = [
     status: "ready",
     repoPath: "apps/webgl-dom-sync",
     deployUrl: `${pagesBaseUrl}/webgl-dom-sync/`,
+    capabilities: {
+      reducedMotion: true,
+      perfMode: true,
+    },
   },
   {
     id: "dataviz-scrolly",
@@ -74,5 +98,9 @@ export const microsites: Microsite[] = [
     status: "ready",
     repoPath: "apps/dataviz-scrolly",
     deployUrl: `${pagesBaseUrl}/dataviz-scrolly/`,
+    capabilities: {
+      reducedMotion: true,
+      perfMode: true,
+    },
   },
 ];

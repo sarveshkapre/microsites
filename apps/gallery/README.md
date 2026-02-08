@@ -16,3 +16,4 @@ Edit the homepage at `src/app/page.tsx`.
 ## Notes
 - This repo contains original demos inspired by patterns (no cloned sites/assets).
 - Every demo should support `prefers-reduced-motion` and remain performant.
+- Cards expose capability badges for `Reduced motion` and `Perf mode` readiness.

@@ -5,15 +5,16 @@
 - Chapter-based narrative sections
 - Chapter boundaries swap datasets and highlight color
 - `prefers-reduced-motion` support + manual toggle
+- Perf mode toggle for lower-cost chart transitions
 
 ## Getting started
 From the repo root:
+
 ```bash
 npm install
 npm run dev:dataviz-scrolly
 ```
 
 ## Key files
-- `src/components/DataVizScrollyDemo.tsx` — main demo
-- `src/lib/usePrefersReducedMotion.ts` — reduced-motion hook
-
+- `src/components/DataVizScrollyDemo.tsx` - main demo + motion/perf controls
+- `src/lib/usePrefersReducedMotion.ts` - reduced-motion hook

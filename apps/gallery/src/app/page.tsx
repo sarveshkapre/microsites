@@ -80,6 +80,19 @@ export default function Home() {
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2">
+                <span className="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs font-medium text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+                  {site.capabilities.reducedMotion
+                    ? "Reduced motion"
+                    : "Reduced motion: pending"}
+                </span>
+                <span className="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs font-medium text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+                  {site.capabilities.perfMode
+                    ? "Perf mode"
+                    : "Perf mode: pending"}
+                </span>
+              </div>
+
+              <div className="mt-3 flex flex-wrap gap-2">
                 {site.stack.map((tag) => (
                   <span
                     key={tag}
