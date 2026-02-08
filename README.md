@@ -36,6 +36,13 @@ npm run dev:webgl-dom-sync
 npm run dev:dataviz-scrolly
 ```
 
+## Verification
+```bash
+npm run lint:all
+npm run build:all
+npm run verify
+```
+
 ## Deploy (GitHub Pages)
 - Workflow: `.github/workflows/pages.yml`
 - Local build: `npm run build:pages` (outputs to `.pages-dist/`)
@@ -43,5 +50,6 @@ npm run dev:dataviz-scrolly
 
 ## Rules of the road
 - Respect `prefers-reduced-motion` in every demo.
+- Ship a manual perf mode switch in every demo to cap expensive effects.
 - Keep performance budgets tight (no always-on heavy effects).
 - Use your own assets or properly licensed ones; document them.
