@@ -1,12 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+  type PointerEvent as ReactPointerEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  usePersistedBoolean,
+  usePersistedNullableBoolean,
+} from "@microsites/controls";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
 const repoUrl = "https://github.com/sarveshkapre/microsites" as const;
@@ -21,6 +23,25 @@ type Chapter = {
   color: string;
 };
 
+type SimpleLineChartProps = {
+  chapterId: string;
+  color: string;
+  perfMode: boolean;
+  reducedMotion: boolean;
+  series: Point[];
+};
+
+const chartSize = {
+  width: 640,
+  height: 320,
+  padding: {
+    top: 18,
+    right: 14,
+    bottom: 30,
+    left: 38,
+  },
+} as const;
+
 function makeSeries(seed: number) {
   const points: Point[] = [];
   for (let i = 0; i <= 24; i += 1) {
@@ -31,6 +52,203 @@ function makeSeries(seed: number) {
     points.push({ x: i, y: Math.round((50 + base + trend + pulse) * 10) / 10 });
   }
   return points;
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function toFixedValue(value: number) {
+  return Number.isInteger(value) ? `${value}` : value.toFixed(1);
+}
+
+function SimpleLineChart({
+  chapterId,
+  color,
+  perfMode,
+  reducedMotion,
+  series,
+}: SimpleLineChartProps) {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const { xMin, xMax, yMin, yMax, yTicks } = useMemo(() => {
+    const xMinRaw = Math.min(...series.map((point) => point.x));
+    const xMaxRaw = Math.max(...series.map((point) => point.x));
+    const yMinRaw = Math.min(...series.map((point) => point.y));
+    const yMaxRaw = Math.max(...series.map((point) => point.y));
+
+    const yPadding = Math.max(2, Math.round((yMaxRaw - yMinRaw) * 0.15));
+    const xMin = Number.isFinite(xMinRaw) ? xMinRaw : 0;
+    const xMax = Number.isFinite(xMaxRaw) ? xMaxRaw : 24;
+    const yMin = Number.isFinite(yMinRaw) ? yMinRaw - yPadding : 0;
+    const yMax = Number.isFinite(yMaxRaw) ? yMaxRaw + yPadding : 100;
+
+    const tickCount = 5;
+    const yTicks = Array.from({ length: tickCount }, (_, index) => {
+      const t = index / (tickCount - 1);
+      return yMax - (yMax - yMin) * t;
+    });
+
+    return { xMin, xMax, yMin, yMax, yTicks };
+  }, [series]);
+
+  const frameWidth =
+    chartSize.width - chartSize.padding.left - chartSize.padding.right;
+  const frameHeight =
+    chartSize.height - chartSize.padding.top - chartSize.padding.bottom;
+
+  const xToPx = (value: number) =>
+    chartSize.padding.left + ((value - xMin) / Math.max(1, xMax - xMin)) * frameWidth;
+
+  const yToPx = (value: number) =>
+    chartSize.padding.top + ((yMax - value) / Math.max(1, yMax - yMin)) * frameHeight;
+
+  const polylinePoints = series
+    .map((point) => `${xToPx(point.x)},${yToPx(point.y)}`)
+    .join(" ");
+
+  const areaPoints = [
+    `${xToPx(series[0]?.x ?? xMin)},${yToPx(yMin)}`,
+    ...series.map((point) => `${xToPx(point.x)},${yToPx(point.y)}`),
+    `${xToPx(series[series.length - 1]?.x ?? xMax)},${yToPx(yMin)}`,
+  ].join(" ");
+
+  const hoveredPoint =
+    hoveredIndex !== null && hoveredIndex >= 0 ? series[hoveredIndex] : null;
+
+  const onPointerMove = (event: ReactPointerEvent<SVGSVGElement>) => {
+    const target = event.currentTarget;
+    const rect = target.getBoundingClientRect();
+    if (rect.width <= 0) return;
+
+    const pointerRatio = clamp((event.clientX - rect.left) / rect.width, 0, 1);
+    const nextIndex = Math.round(pointerRatio * (series.length - 1));
+    setHoveredIndex(nextIndex);
+  };
+
+  return (
+    <svg
+      key={chapterId}
+      role="img"
+      aria-label="Chapter line chart"
+      className="h-full w-full"
+      viewBox={`0 0 ${chartSize.width} ${chartSize.height}`}
+      onPointerMove={onPointerMove}
+      onPointerLeave={() => setHoveredIndex(null)}
+    >
+      <defs>
+        <linearGradient id={`area-${chapterId}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity={perfMode ? 0.2 : 0.3} />
+          <stop offset="100%" stopColor={color} stopOpacity={0.02} />
+        </linearGradient>
+      </defs>
+
+      {yTicks.map((tick) => (
+        <g key={tick}>
+          <line
+            x1={chartSize.padding.left}
+            y1={yToPx(tick)}
+            x2={chartSize.width - chartSize.padding.right}
+            y2={yToPx(tick)}
+            stroke="rgba(148,163,184,0.25)"
+            strokeDasharray={perfMode ? "0" : "4 4"}
+          />
+          <text
+            x={chartSize.padding.left - 8}
+            y={yToPx(tick) + 4}
+            textAnchor="end"
+            fill="rgba(148,163,184,0.95)"
+            fontSize="11"
+            fontWeight="500"
+          >
+            {toFixedValue(tick)}
+          </text>
+        </g>
+      ))}
+
+      {[0, 6, 12, 18, 24].map((tick) => (
+        <text
+          key={tick}
+          x={xToPx(tick)}
+          y={chartSize.height - chartSize.padding.bottom + 17}
+          textAnchor="middle"
+          fill="rgba(148,163,184,0.95)"
+          fontSize="11"
+          fontWeight="500"
+        >
+          {tick}
+        </text>
+      ))}
+
+      <polygon points={areaPoints} fill={`url(#area-${chapterId})`} />
+
+      <polyline
+        points={polylinePoints}
+        fill="none"
+        stroke={color}
+        strokeWidth={perfMode ? 2.5 : 3}
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        className={
+          reducedMotion || perfMode
+            ? ""
+            : "transition-[opacity,stroke] duration-300 ease-out"
+        }
+      />
+
+      {hoveredPoint ? (
+        <g>
+          <line
+            x1={xToPx(hoveredPoint.x)}
+            y1={chartSize.padding.top}
+            x2={xToPx(hoveredPoint.x)}
+            y2={chartSize.height - chartSize.padding.bottom}
+            stroke="rgba(226,232,240,0.6)"
+            strokeDasharray="4 4"
+          />
+          <circle
+            cx={xToPx(hoveredPoint.x)}
+            cy={yToPx(hoveredPoint.y)}
+            r={5}
+            fill={color}
+            stroke="rgba(255,255,255,0.95)"
+            strokeWidth={2}
+          />
+          <g
+            transform={`translate(${clamp(
+              xToPx(hoveredPoint.x) + 10,
+              chartSize.padding.left + 8,
+              chartSize.width - chartSize.padding.right - 118,
+            )}, ${clamp(
+              yToPx(hoveredPoint.y) - 36,
+              chartSize.padding.top + 4,
+              chartSize.height - chartSize.padding.bottom - 48,
+            )})`}
+          >
+            <rect
+              width="108"
+              height="38"
+              rx="9"
+              fill="rgba(9,9,11,0.88)"
+              stroke="rgba(255,255,255,0.12)"
+            />
+            <text x="10" y="16" fill="rgba(226,232,240,0.92)" fontSize="11">
+              Sample {hoveredPoint.x}
+            </text>
+            <text
+              x="10"
+              y="30"
+              fill="rgba(248,250,252,0.95)"
+              fontSize="12"
+              fontWeight="600"
+            >
+              Value {toFixedValue(hoveredPoint.y)}
+            </text>
+          </g>
+        </g>
+      ) : null}
+    </svg>
+  );
 }
 
 export function DataVizScrollyDemo() {
@@ -73,11 +291,12 @@ export function DataVizScrollyDemo() {
   );
 
   const prefersReducedMotion = usePrefersReducedMotion();
-  const [reducedMotionOverride, setReducedMotionOverride] = useState<
-    boolean | null
-  >(null);
+  const [reducedMotionOverride, setReducedMotionOverride] =
+    usePersistedNullableBoolean("microsites:dataviz-scrolly:reduced-motion");
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
-  const [perfMode, setPerfMode] = useState(false);
+  const [perfMode, setPerfMode] = usePersistedBoolean(
+    "microsites:dataviz-scrolly:perf-mode",
+  );
 
   const [activeIndex, setActiveIndex] = useState(0);
   const chapterRefs = useRef<Array<HTMLElement | null>>([]);
@@ -89,8 +308,10 @@ export function DataVizScrollyDemo() {
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0),
+          )[0];
         if (!visible) return;
         const idx = elements.indexOf(visible.target as HTMLElement);
         if (idx >= 0) setActiveIndex(idx);
@@ -193,48 +414,21 @@ export function DataVizScrollyDemo() {
               </div>
 
               <div className="mt-4 h-[320px] rounded-2xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={active.series}>
-                    <XAxis
-                      dataKey="x"
-                      tick={{ fill: "rgba(160,160,160,0.9)" }}
-                      axisLine={false}
-                      tickLine={false}
-                      hide={false}
-                    />
-                    <YAxis
-                      tick={{ fill: "rgba(160,160,160,0.9)" }}
-                      axisLine={false}
-                      tickLine={false}
-                      width={34}
-                    />
-                    <Tooltip
-                      contentStyle={{
-                        background: "rgba(10,10,10,0.85)",
-                        border: "1px solid rgba(255,255,255,0.10)",
-                        borderRadius: 12,
-                      }}
-                      labelStyle={{ color: "rgba(255,255,255,0.8)" }}
-                      itemStyle={{ color: "rgba(255,255,255,0.9)" }}
-                    />
-                    <Line
-                      type={perfMode ? "linear" : "monotone"}
-                      dataKey="y"
-                      stroke={active.color}
-                      strokeWidth={perfMode ? 2.5 : 3}
-                      dot={false}
-                      isAnimationActive={!reducedMotion && !perfMode}
-                      animationDuration={perfMode ? 200 : 450}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+                <SimpleLineChart
+                  chapterId={active.id}
+                  color={active.color}
+                  perfMode={perfMode}
+                  reducedMotion={reducedMotion}
+                  series={active.series}
+                />
               </div>
 
               <div className="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm leading-6 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
                 <div className="font-semibold">Implementation note</div>
                 <div className="mt-1">
-                  Chapter activation uses IntersectionObserver. Animation is
-                  disabled when reduced motion or perf mode is enabled.
+                  Chapter activation uses IntersectionObserver. The chart is pure
+                  SVG with a lightweight hover probe, and extra motion is
+                  disabled in reduced-motion/perf mode.
                 </div>
               </div>
             </div>
@@ -275,7 +469,7 @@ export function DataVizScrollyDemo() {
 
                 <div className="mt-8 grid gap-3 sm:grid-cols-2">
                   {[
-                    { k: "Chart", v: "Line (single series)" },
+                    { k: "Chart", v: "SVG line + hover probe" },
                     { k: "Motion", v: reducedMotion ? "Reduced" : "Standard" },
                     { k: "Performance", v: perfMode ? "Perf mode" : "Standard" },
                   ].map((row) => (

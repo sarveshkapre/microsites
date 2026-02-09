@@ -94,7 +94,7 @@ export const microsites: Microsite[] = [
     id: "dataviz-scrolly",
     title: "Data-viz Scrollytelling",
     description: "Scroll chapters that morph charts with narrative annotations.",
-    stack: ["Vite", "React", "D3 or Recharts"],
+    stack: ["Vite", "React", "SVG chart primitives"],
     status: "ready",
     repoPath: "apps/dataviz-scrolly",
     deployUrl: `${pagesBaseUrl}/dataviz-scrolly/`,

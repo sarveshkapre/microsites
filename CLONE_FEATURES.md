@@ -7,11 +7,19 @@
 - Gaps found during codebase exploration
 
 ## Candidate Features To Do
-- [ ] (P1) Split `apps/dataviz-scrolly` chart bundle to address the current `>500 kB` Vite warning (lazy-load heavy charting pieces or tune manual chunks).
-- [ ] (P1) Persist `Reduced motion` and `Perf mode` user toggles across refreshes for each demo via local storage.
-- [ ] (P2) Extract a shared control bar component for motion/perf toggles to reduce duplicated UI logic across apps.
+- [ ] (P1) Add an explicit “Use system default” reset control for reduced-motion overrides in each demo (current UI supports persisted manual override but not one-click reset to system preference).
+- [ ] (P2) Add a lightweight local smoke-test script that boots one demo server and validates key page markers (to standardize runtime checks in automation runs).
+- [ ] (P2) Remove duplicate build work in `npm run verify` (currently both `build:all` and `build:pages`) while preserving deployment safety.
 
 ## Implemented
+- [x] (2026-02-09) Replaced `apps/dataviz-scrolly` Recharts runtime with a lightweight SVG chart implementation and removed `recharts` dependency.
+  Evidence: `npm run build -w dataviz-scrolly` -> `dist/assets/index-C2iBELS0.js   205.27 kB` (no `>500 kB` warning); files: `apps/dataviz-scrolly/src/components/DataVizScrollyDemo.tsx`, `apps/dataviz-scrolly/package.json`.
+- [x] (2026-02-09) Persisted `Reduced motion` and `Perf mode` toggles across all demos via shared workspace controls hooks.
+  Evidence: `npm run lint -w premium-product && npm run lint -w editorial-scrolly && npm run lint -w webgl-dom-sync && npm run lint -w neon-cinematic && npm run lint -w playful-micro && npm run lint -w dataviz-scrolly` (pass); files: `packages/controls/index.js`, `packages/controls/index.d.ts` + six demo components.
+- [x] (2026-02-09) Added bundle budget enforcement (`500 kB` max per Vite JS asset) and wired it into root verification.
+  Evidence: `npm run check:bundles` (all PASS); files: `scripts/check-bundle-budgets.mjs`, `package.json`, `README.md`, `docs/PERF.md`.
+- [x] (2026-02-09) Bootstrapped session memory and incident logs for autonomous maintenance workflow.
+  Evidence: files `PROJECT_MEMORY.md`, `INCIDENTS.md`; linked in changelog entry `CHANGELOG.md`.
 - [x] (2026-02-08) Added perf-mode toggles to all remaining demos: `apps/premium-product/src/app/_components/PremiumProductDemo.tsx`, `apps/editorial-scrolly/src/app/_components/EditorialScrollyDemo.tsx`, `apps/playful-micro/src/components/PlayfulMicroDemo.tsx`, `apps/dataviz-scrolly/src/components/DataVizScrollyDemo.tsx`.
   Evidence: `npm run lint -w premium-product && npm run lint -w editorial-scrolly && npm run lint -w playful-micro && npm run lint -w dataviz-scrolly` (pass).
 - [x] (2026-02-08) Surfaced production-readiness capability badges in gallery using explicit metadata (`reducedMotion`, `perfMode`): `apps/gallery/src/lib/microsites.ts`, `apps/gallery/src/app/page.tsx`.
@@ -24,7 +32,8 @@
 ## Insights
 - `Deploy GitHub Pages` cancellations on older commits are expected due workflow concurrency (`cancel-in-progress: true`), not build failures.
 - `npm run verify` currently runs both `build:all` and `build:pages`, which duplicates builds; this is acceptable for safety but can be optimized later for speed.
-- `apps/dataviz-scrolly` remains the heaviest artifact (`~540 kB` JS bundle), making chunk-splitting the next highest-impact perf task.
+- `apps/dataviz-scrolly` JS payload dropped from `540.24 kB` to `205.27 kB` after replacing Recharts with SVG primitives.
+- Shared `@microsites/controls` hooks reduced repeated toggle state logic and made persisted control behavior consistent across all demos.
 
 ## Notes
 - This file is maintained by the autonomous clone loop.

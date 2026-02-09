@@ -4,6 +4,10 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  usePersistedBoolean,
+  usePersistedNullableBoolean,
+} from "@microsites/controls";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 type Chapter = {
@@ -62,11 +66,12 @@ export function EditorialScrollyDemo() {
   );
 
   const prefersReducedMotion = usePrefersReducedMotion();
-  const [reducedMotionOverride, setReducedMotionOverride] = useState<
-    boolean | null
-  >(null);
+  const [reducedMotionOverride, setReducedMotionOverride] =
+    usePersistedNullableBoolean("microsites:editorial-scrolly:reduced-motion");
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
-  const [perfMode, setPerfMode] = useState(false);
+  const [perfMode, setPerfMode] = usePersistedBoolean(
+    "microsites:editorial-scrolly:perf-mode",
+  );
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const chapterRefs = useRef<Array<HTMLElement | null>>([]);

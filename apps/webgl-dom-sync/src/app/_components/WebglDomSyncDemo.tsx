@@ -9,8 +9,12 @@ import {
   ScrollControls,
   useScroll,
 } from "@react-three/drei";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { MathUtils } from "three";
+import {
+  usePersistedBoolean,
+  usePersistedNullableBoolean,
+} from "@microsites/controls";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 type Section = {
@@ -107,12 +111,13 @@ export function WebglDomSyncDemo() {
   );
 
   const prefersReducedMotion = usePrefersReducedMotion();
-  const [reducedMotionOverride, setReducedMotionOverride] = useState<
-    boolean | null
-  >(null);
+  const [reducedMotionOverride, setReducedMotionOverride] =
+    usePersistedNullableBoolean("microsites:webgl-dom-sync:reduced-motion");
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
 
-  const [perfMode, setPerfMode] = useState(false);
+  const [perfMode, setPerfMode] = usePersistedBoolean(
+    "microsites:webgl-dom-sync:perf-mode",
+  );
 
   const pages = sections.length + 0.25;
   const dpr: [number, number] = perfMode ? [1, 1.25] : [1, 1.75];

@@ -8,3 +8,4 @@
 ## Common checks
 - Test on a mid-range laptop in Chrome and Safari.
 - Watch main-thread time, layout thrash, and GPU overdraw.
+- Run `npm run check:bundles` after builds to enforce the Vite JS bundle budget (`500 kB` max per asset).

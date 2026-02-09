@@ -40,8 +40,11 @@ npm run dev:dataviz-scrolly
 ```bash
 npm run lint:all
 npm run build:all
+npm run check:bundles
 npm run verify
 ```
+
+`npm run verify` includes a Vite bundle budget gate (`500 kB` max per JS asset) before running the full Pages build.
 
 ## Deploy (GitHub Pages)
 - Workflow: `.github/workflows/pages.yml`

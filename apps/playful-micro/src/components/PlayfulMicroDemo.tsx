@@ -1,6 +1,10 @@
 import { MotionConfig, motion, useMotionValue, useSpring } from "framer-motion";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  usePersistedBoolean,
+  usePersistedNullableBoolean,
+} from "@microsites/controls";
 import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
 const repoUrl = "https://github.com/sarveshkapre/microsites" as const;
@@ -38,11 +42,12 @@ export function PlayfulMicroDemo() {
   );
 
   const prefersReducedMotion = usePrefersReducedMotion();
-  const [reducedMotionOverride, setReducedMotionOverride] = useState<
-    boolean | null
-  >(null);
+  const [reducedMotionOverride, setReducedMotionOverride] =
+    usePersistedNullableBoolean("microsites:playful-micro:reduced-motion");
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
-  const [perfMode, setPerfMode] = useState(false);
+  const [perfMode, setPerfMode] = usePersistedBoolean(
+    "microsites:playful-micro:perf-mode",
+  );
   const spotlightEnabled = !reducedMotion && !perfMode;
 
   const cursorX = useMotionValue(0);
