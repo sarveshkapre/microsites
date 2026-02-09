@@ -7,16 +7,12 @@
 - Gaps found during codebase exploration
 
 ## Candidate Features To Do
-- [ ] (P1) [Selected] Add an explicit “Use system default” reset control for reduced-motion overrides in each demo (current UI supports persisted manual override but not one-click reset to system preference).
-  - Score: impact high | effort low | strategic fit high | differentiation medium | risk low | confidence high
-- [ ] (P1) [Selected] Add stable page markers for smoke checks (e.g. `data-microsite="<id>"`) across all demos.
-  - Score: impact high | effort low | strategic fit high | differentiation low | risk low | confidence high
-- [ ] (P1) [Selected] Enforce the Vite bundle budget gate in CI (separate job that builds Vite workspaces then runs `npm run check:bundles`).
-  - Score: impact high | effort low | strategic fit high | differentiation low | risk low | confidence high
-- [ ] (P2) [Selected] Add a lightweight local smoke-test script that boots one demo server and validates key page markers (to standardize runtime checks in automation runs).
-  - Score: impact medium | effort medium | strategic fit high | differentiation low | risk medium | confidence medium
+- [ ] (P2) Add a small CI smoke job that runs `npm run smoke` for `gallery` and one Vite demo (fast runtime sanity check).
+  - Score: impact medium | effort low | strategic fit high | differentiation low | risk low | confidence medium
 - [ ] (P2) Remove duplicate build work in `npm run verify` (currently both `build:all` and `build:pages`) while preserving deployment safety.
   - Score: impact medium | effort low | strategic fit medium | differentiation low | risk low | confidence medium
+- [ ] (P2) Add per-app bundle budgets (thresholds differ by demo) while keeping a strict default.
+  - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
 - [ ] (P3) Deduplicate per-app `usePrefersReducedMotion` hooks into `packages/controls` (or `packages/motion`) to reduce drift.
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk medium | confidence medium
 - [ ] (P3) Add gallery thumbnails for each microsite (generated + committed or built-time) to make the index feel less “listy”.
@@ -25,6 +21,16 @@
   - Score: impact medium | effort medium | strategic fit high | differentiation low | risk medium | confidence medium
 
 ## Implemented
+- [x] (2026-02-09) Enforced bundle budgets in CI and GitHub Pages deploy (Pages build job + `npm run check:bundles`).
+  Evidence: workflow updates `/.github/workflows/ci.yml`, `/.github/workflows/pages.yml`; local: `npm run check:bundles` (PASS).
+- [x] (2026-02-09) Added a local smoke script (`npm run smoke`) that boots a dev server and asserts `data-microsite="<id>"` exists.
+  Evidence: `npm run smoke -- --app gallery --port 3100` (PASS); file: `scripts/smoke.mjs`, `package.json`.
+- [x] (2026-02-09) Added `data-microsite` markers to gallery and Vite HTML entrypoints to enable pre-hydration smoke checks.
+  Evidence: `npm run smoke -- --app neon-cinematic --port 5201` (PASS); files: `apps/gallery/src/app/page.tsx`, `apps/neon-cinematic/index.html`, `apps/playful-micro/index.html`, `apps/dataviz-scrolly/index.html`.
+- [x] (2026-02-09) Added an explicit `System` reset control for reduced-motion overrides across demos.
+  Evidence: components `apps/premium-product/src/app/_components/PremiumProductDemo.tsx`, `apps/editorial-scrolly/src/app/_components/EditorialScrollyDemo.tsx`, `apps/webgl-dom-sync/src/app/_components/WebglDomSyncDemo.tsx`, `apps/neon-cinematic/src/components/NeonCinematicDemo.tsx`, `apps/playful-micro/src/components/PlayfulMicroDemo.tsx`, `apps/dataviz-scrolly/src/components/DataVizScrollyDemo.tsx`.
+- [x] (2026-02-09) Added bounded market scan notes to keep UX baseline expectations explicit.
+  Evidence: `docs/MARKET_SCAN.md`.
 - [x] (2026-02-09) Replaced `apps/dataviz-scrolly` Recharts runtime with a lightweight SVG chart implementation and removed `recharts` dependency.
   Evidence: `npm run build -w dataviz-scrolly` -> `dist/assets/index-C2iBELS0.js   205.27 kB` (no `>500 kB` warning); files: `apps/dataviz-scrolly/src/components/DataVizScrollyDemo.tsx`, `apps/dataviz-scrolly/package.json`.
 - [x] (2026-02-09) Persisted `Reduced motion` and `Perf mode` toggles across all demos via shared workspace controls hooks.
@@ -47,6 +53,7 @@
 - `npm run verify` currently runs both `build:all` and `build:pages`, which duplicates builds; this is acceptable for safety but can be optimized later for speed.
 - `apps/dataviz-scrolly` JS payload dropped from `540.24 kB` to `205.27 kB` after replacing Recharts with SVG primitives.
 - Shared `@microsites/controls` hooks reduced repeated toggle state logic and made persisted control behavior consistent across all demos.
+- Vite dev servers may bind to `localhost` (IPv6) only on some machines; smoke checks should default to `http://localhost:<port>` instead of `127.0.0.1`.
 
 ## Notes
 - This file is maintained by the autonomous clone loop.

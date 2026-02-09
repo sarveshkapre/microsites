@@ -42,3 +42,42 @@
 - Trust label: trusted-local-check-automation.
 - Follow-up:
   - Add per-app budget thresholds when demos become more differentiated.
+
+### Decision 4: Enforce bundle budgets in CI and on GitHub Pages deploy
+- Why:
+  - Local gates are useful, but CI enforcement is what prevents regressions from landing on `main`.
+  - Pages deploy should never publish a bundle that violates the repo’s stated performance budget.
+- Evidence:
+  - CI now runs Pages build + `npm run check:bundles`: `.github/workflows/ci.yml`.
+  - Pages deploy now runs `npm run check:bundles`: `.github/workflows/pages.yml`.
+  - Local check: `npm run check:bundles` -> all PASS.
+- Commit: main (cycle 2 autonomous maintainer session, 2026-02-09).
+- Confidence: high.
+- Trust label: trusted-local-check-automation.
+
+### Decision 5: Add a lightweight smoke script + static page markers for runtime checks
+- Why:
+  - A cheap runtime sanity check catches regressions that lint/build can’t (routing, base paths, missing critical DOM markers).
+  - Adding `data-microsite` in HTML entrypoints enables pre-hydration checks (no headless browser needed).
+- Evidence:
+  - Added `scripts/smoke.mjs` and root `npm run smoke`.
+  - Added `data-microsite="gallery"` to gallery page wrapper.
+  - Added `data-microsite` markers to Vite `index.html` root mounts.
+  - Local: `npm run smoke -- --app gallery --port 3100` -> PASS.
+  - Local: `npm run smoke -- --app neon-cinematic --port 5201` -> PASS.
+- Commit: main (cycle 2 autonomous maintainer session, 2026-02-09).
+- Confidence: high.
+- Trust label: trusted-local-runtime-signal.
+
+### Mistakes And Fixes
+- Smoke script initially targeted `127.0.0.1`, which can fail when dev servers bind to `localhost` (IPv6) only on some environments.
+  - Fix: default to `localhost` and add a `--host` option.
+  - Prevention rule: avoid hardcoding IPv4 loopback in local dev smoke checks.
+
+### Verification Evidence
+- `npm run lint:all` -> PASS
+- `npm run build:all` -> PASS
+- `npm run check:bundles` -> PASS (all Vite apps under `500 kB` per JS asset)
+- `node scripts/build-pages.mjs` -> PASS
+- `npm run smoke -- --app gallery --port 3100 --timeout-ms 30000` -> PASS
+- `npm run smoke -- --app neon-cinematic --port 5201 --timeout-ms 30000` -> PASS
