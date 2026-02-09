@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `apps/neon-cinematic`: Vite long-scroll “neon cinematic” demo.
 - `apps/playful-micro`: Framer Motion micro-interactions demo.
 - `apps/webgl-dom-sync`: react-three-fiber scroll-synced 3D + readable DOM demo.
-- `apps/dataviz-scrolly`: sticky chart + chapter scrollytelling demo (Recharts).
+- `apps/dataviz-scrolly`: sticky chart + chapter scrollytelling demo.
 - GitHub Pages deployment workflow + static build script.
 - CI smoke job to boot a dev server and validate `data-microsite` markers (`npm run smoke:ci`).
 - Gallery capability badges for `Reduced motion` and `Perf mode`.
