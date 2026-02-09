@@ -7,11 +7,15 @@
 - Gaps found during codebase exploration
 
 ## Candidate Features To Do
-- [ ] (P2) Add a small CI smoke job that runs `npm run smoke` for `gallery` and one Vite demo (fast runtime sanity check).
+- [ ] (P1) (Selected) Add a small CI smoke job that runs `npm run smoke` for `gallery` and one Vite demo (fast runtime sanity check).
+  - Score: impact high | effort low | strategic fit high | differentiation low | risk low | confidence high
+- [ ] (P1) (Selected) Remove duplicate build work in `npm run verify` (currently both `build:all` and `build:pages`) while preserving deployment safety.
+  - Score: impact medium | effort low | strategic fit high | differentiation low | risk low | confidence high
+- [ ] (P2) (Selected) Expand the bounded market scan with modern platform primitives we should prefer for these demos (CSS scroll-driven animations, View Transitions).
   - Score: impact medium | effort low | strategic fit high | differentiation low | risk low | confidence medium
-- [ ] (P2) Remove duplicate build work in `npm run verify` (currently both `build:all` and `build:pages`) while preserving deployment safety.
-  - Score: impact medium | effort low | strategic fit medium | differentiation low | risk low | confidence medium
 - [ ] (P2) Add per-app bundle budgets (thresholds differ by demo) while keeping a strict default.
+  - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
+- [ ] (P3) Add a Next.js bundle size / report gate for the three Next demos (keep Vite budgets strict, add a lighter Next guard).
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
 - [ ] (P3) Deduplicate per-app `usePrefersReducedMotion` hooks into `packages/controls` (or `packages/motion`) to reduce drift.
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk medium | confidence medium
@@ -19,6 +23,8 @@
   - Score: impact medium | effort high | strategic fit medium | differentiation medium | risk medium | confidence low
 - [ ] (P3) Add `visibilitychange` / offscreen pausing for always-on effects (cursor spotlight, GSAP pinned stages, etc.) to cut idle CPU/GPU.
   - Score: impact medium | effort medium | strategic fit high | differentiation low | risk medium | confidence medium
+- [ ] (P3) Add a minimal accessibility “bar” check in CI (axe-core pass on gallery home, focus-visible presence, skip-link).
+  - Score: impact medium | effort medium | strategic fit high | differentiation low | risk low | confidence low
 
 ## Implemented
 - [x] (2026-02-09) Enforced bundle budgets in CI and GitHub Pages deploy (Pages build job + `npm run check:bundles`).
