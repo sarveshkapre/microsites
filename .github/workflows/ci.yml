@@ -32,6 +32,21 @@ jobs:
       - name: Build
         run: npm run build -w ${{ matrix.workspace }}
 
+  smoke:
+    name: Smoke (dev servers)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Smoke
+        run: npm run smoke:ci
+
   pages:
     name: Pages build + bundle budgets
     runs-on: ubuntu-latest

@@ -7,15 +7,11 @@
 - Gaps found during codebase exploration
 
 ## Candidate Features To Do
-- [ ] (P1) (Selected) Add a small CI smoke job that runs `npm run smoke` for `gallery` and one Vite demo (fast runtime sanity check).
-  - Score: impact high | effort low | strategic fit high | differentiation low | risk low | confidence high
-- [ ] (P1) (Selected) Remove duplicate build work in `npm run verify` (currently both `build:all` and `build:pages`) while preserving deployment safety.
-  - Score: impact medium | effort low | strategic fit high | differentiation low | risk low | confidence high
 - [ ] (P2) (Selected) Expand the bounded market scan with modern platform primitives we should prefer for these demos (CSS scroll-driven animations, View Transitions).
   - Score: impact medium | effort low | strategic fit high | differentiation low | risk low | confidence medium
 - [ ] (P2) Add per-app bundle budgets (thresholds differ by demo) while keeping a strict default.
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
-- [ ] (P3) Add a Next.js bundle size / report gate for the three Next demos (keep Vite budgets strict, add a lighter Next guard).
+- [ ] (P3) Add a Next.js bundle size / report gate for the Next demos (keep Vite budgets strict, add a lighter Next guard).
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
 - [ ] (P3) Deduplicate per-app `usePrefersReducedMotion` hooks into `packages/controls` (or `packages/motion`) to reduce drift.
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk medium | confidence medium
@@ -27,6 +23,8 @@
   - Score: impact medium | effort medium | strategic fit high | differentiation low | risk low | confidence low
 
 ## Implemented
+- [x] (2026-02-09) Added a fast CI smoke job plus a curated `smoke:ci` script (gallery + one Vite demo).
+  Evidence: `npm run smoke:ci` (PASS); workflow: `/.github/workflows/ci.yml`; script: `package.json`.
 - [x] (2026-02-09) Enforced bundle budgets in CI and GitHub Pages deploy (Pages build job + `npm run check:bundles`).
   Evidence: workflow updates `/.github/workflows/ci.yml`, `/.github/workflows/pages.yml`; local: `npm run check:bundles` (PASS).
 - [x] (2026-02-09) Added a local smoke script (`npm run smoke`) that boots a dev server and asserts `data-microsite="<id>"` exists.

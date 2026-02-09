@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `apps/webgl-dom-sync`: react-three-fiber scroll-synced 3D + readable DOM demo.
 - `apps/dataviz-scrolly`: sticky chart + chapter scrollytelling demo (Recharts).
 - GitHub Pages deployment workflow + static build script.
+- CI smoke job to boot a dev server and validate `data-microsite` markers (`npm run smoke:ci`).
 - Gallery capability badges for `Reduced motion` and `Perf mode`.
 - Root verification scripts: `lint:all`, `build:all`, `verify`.
 - Shared controls workspace package: `packages/controls` with persisted boolean hooks for demo toggles.

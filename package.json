@@ -36,6 +36,7 @@
     "build:dataviz-scrolly": "npm run build -w dataviz-scrolly",
     "lint:dataviz-scrolly": "npm run lint -w dataviz-scrolly",
     "check:bundles": "node scripts/check-bundle-budgets.mjs",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "smoke:ci": "node scripts/smoke.mjs --app gallery --port 3100 --timeout-ms 30000 && node scripts/smoke.mjs --app neon-cinematic --port 5201 --timeout-ms 30000"
   }
 }
