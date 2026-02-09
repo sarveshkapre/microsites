@@ -107,7 +107,7 @@ async function waitForHttpOk(url, timeoutMs) {
   throw err;
 }
 
-function spawnDevServer(app, port) {
+function spawnDevServer(app, port, host) {
   const nextApps = new Set([
     "gallery",
     "premium-product",
@@ -118,7 +118,10 @@ function spawnDevServer(app, port) {
   const isNext = nextApps.has(app);
   const args = ["run", "dev", "-w", app, "--", "--port", String(port)];
   if (!isNext) {
+    args.push("--host", host);
     args.push("--strictPort");
+  } else {
+    args.push("--hostname", host);
   }
 
   const child = spawn("npm", args, {
@@ -163,7 +166,7 @@ async function main() {
   const expected = `data-microsite="${app}"`;
 
   const devLogs = [];
-  const child = spawnDevServer(app, port);
+  const child = spawnDevServer(app, port, host);
   captureStreamLines(child.stdout, devLogs, "");
   captureStreamLines(child.stderr, devLogs, "");
 
