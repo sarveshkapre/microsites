@@ -7,8 +7,6 @@
 - Gaps found during codebase exploration
 
 ## Candidate Features To Do
-- [ ] (P2) (Selected) Expand the bounded market scan with modern platform primitives we should prefer for these demos (CSS scroll-driven animations, View Transitions).
-  - Score: impact medium | effort low | strategic fit high | differentiation low | risk low | confidence medium
 - [ ] (P2) Add per-app bundle budgets (thresholds differ by demo) while keeping a strict default.
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
 - [ ] (P3) Add a Next.js bundle size / report gate for the Next demos (keep Vite budgets strict, add a lighter Next guard).
@@ -23,6 +21,8 @@
   - Score: impact medium | effort medium | strategic fit high | differentiation low | risk low | confidence low
 
 ## Implemented
+- [x] (2026-02-09) Expanded the bounded market scan with modern platform primitives (CSS scroll-driven animations, View Transitions).
+  Evidence: `docs/MARKET_SCAN.md`.
 - [x] (2026-02-09) Added a fast CI smoke job plus a curated `smoke:ci` script (gallery + one Vite demo).
   Evidence: `npm run smoke:ci` (PASS); workflow: `/.github/workflows/ci.yml`; script: `package.json`.
 - [x] (2026-02-09) Enforced bundle budgets in CI and GitHub Pages deploy (Pages build job + `npm run check:bundles`).
@@ -54,7 +54,7 @@
 
 ## Insights
 - `Deploy GitHub Pages` cancellations on older commits are expected due workflow concurrency (`cancel-in-progress: true`), not build failures.
-- `npm run verify` currently runs both `build:all` and `build:pages`, which duplicates builds; this is acceptable for safety but can be optimized later for speed.
+- `npm run verify` runs `lint:all`, then `build:pages`, then `check:bundles` (no duplicate build stage).
 - `apps/dataviz-scrolly` JS payload dropped from `540.24 kB` to `205.27 kB` after replacing Recharts with SVG primitives.
 - Shared `@microsites/controls` hooks reduced repeated toggle state logic and made persisted control behavior consistent across all demos.
 - Vite dev servers may bind to `localhost` (IPv6) only on some machines; smoke checks should default to `http://localhost:<port>` instead of `127.0.0.1`.
