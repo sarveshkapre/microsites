@@ -31,3 +31,19 @@ jobs:
         run: npm run lint -w ${{ matrix.workspace }}
       - name: Build
         run: npm run build -w ${{ matrix.workspace }}
+
+  pages:
+    name: Pages build + bundle budgets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Build static site
+        run: node scripts/build-pages.mjs
+      - name: Bundle budgets
+        run: npm run check:bundles
