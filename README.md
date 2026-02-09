@@ -45,7 +45,7 @@ npm run verify
 npm run smoke -- --app gallery --port 3100
 ```
 
-`npm run verify` includes a Vite bundle budget gate (`500 kB` max per JS asset) before running the full Pages build.
+`npm run verify` runs the Pages build and then enforces the Vite bundle budget gate (`500 kB` max per JS asset).
 
 ## Deploy (GitHub Pages)
 - Workflow: `.github/workflows/pages.yml`
