@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated perf guidance docs and root README verification instructions.
 - `apps/dataviz-scrolly` replaced Recharts with a lightweight SVG chart renderer to remove the `>500 kB` chunk warning.
 - Persisted `Reduced motion` and `Perf mode` toggle states across all demo apps.
+- Added a one-click `System` reset control for reduced-motion overrides across all demos.
+- Added stable `data-microsite` page markers to all demos to enable lightweight smoke checks.
 - `npm run verify` now includes `npm run check:bundles` before the Pages build stage.
 
 ## [0.1.0] - 2026-02-01

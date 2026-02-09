@@ -56,6 +56,7 @@ export function NeonCinematicDemo() {
   const [reducedMotionOverride, setReducedMotionOverride] =
     usePersistedNullableBoolean("microsites:neon-cinematic:reduced-motion");
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
+  const reducedMotionUsesSystem = reducedMotionOverride === null;
 
   const [perfMode, setPerfMode] = usePersistedBoolean(
     "microsites:neon-cinematic:perf-mode",
@@ -160,7 +161,11 @@ export function NeonCinematicDemo() {
   const active = scenes[activeIndex] ?? scenes[0]!;
 
   return (
-    <div className="min-h-screen bg-black text-zinc-50">
+    <div
+      className="min-h-screen bg-black text-zinc-50"
+      data-testid="microsite-root"
+      data-microsite="neon-cinematic"
+    >
       <div className="sticky top-0 z-50 border-b border-white/10 bg-black/40 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
           <div className="flex items-center gap-3">
@@ -178,15 +183,32 @@ export function NeonCinematicDemo() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <label className="flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-2 text-sm font-medium text-zinc-100">
-              <input
-                type="checkbox"
-                className="accent-white"
-                checked={reducedMotion}
-                onChange={(e) => setReducedMotionOverride(e.target.checked)}
-              />
-              Reduced motion
-            </label>
+            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-2 text-sm font-medium text-zinc-100">
+              <label className="flex cursor-pointer items-center gap-2">
+                <input
+                  type="checkbox"
+                  className="accent-white"
+                  checked={reducedMotion}
+                  onChange={(e) => setReducedMotionOverride(e.target.checked)}
+                />
+                Reduced motion
+              </label>
+              {reducedMotionUsesSystem ? (
+                <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-semibold text-zinc-200">
+                  System
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setReducedMotionOverride(null)}
+                  className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-semibold text-zinc-200 transition hover:bg-white/10"
+                  aria-label="Reset reduced motion to system preference"
+                  title="Use system prefers-reduced-motion"
+                >
+                  System
+                </button>
+              )}
+            </div>
 
             <label className="flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-2 text-sm font-medium text-zinc-100">
               <input

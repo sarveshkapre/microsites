@@ -72,6 +72,7 @@ export function EditorialScrollyDemo() {
   const [perfMode, setPerfMode] = usePersistedBoolean(
     "microsites:editorial-scrolly:perf-mode",
   );
+  const reducedMotionUsesSystem = reducedMotionOverride === null;
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const chapterRefs = useRef<Array<HTMLElement | null>>([]);
@@ -109,6 +110,8 @@ export function EditorialScrollyDemo() {
   return (
     <div
       ref={rootRef}
+      data-testid="microsite-root"
+      data-microsite="editorial-scrolly"
       className="min-h-screen bg-gradient-to-b from-zinc-50 via-white to-zinc-50 text-zinc-950 dark:from-black dark:via-zinc-950 dark:to-black dark:text-zinc-50"
     >
       <div className="mx-auto w-full max-w-6xl px-6 py-10">
@@ -129,15 +132,32 @@ export function EditorialScrollyDemo() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <label className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
-                <input
-                  type="checkbox"
-                  className="accent-zinc-900 dark:accent-white"
-                  checked={reducedMotion}
-                  onChange={(e) => setReducedMotionOverride(e.target.checked)}
-                />
-                Reduced motion
-              </label>
+              <div className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
+                <label className="flex cursor-pointer items-center gap-2">
+                  <input
+                    type="checkbox"
+                    className="accent-zinc-900 dark:accent-white"
+                    checked={reducedMotion}
+                    onChange={(e) => setReducedMotionOverride(e.target.checked)}
+                  />
+                  Reduced motion
+                </label>
+                {reducedMotionUsesSystem ? (
+                  <span className="rounded-full border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-[11px] font-semibold text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200">
+                    System
+                  </span>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setReducedMotionOverride(null)}
+                    className="rounded-full border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-[11px] font-semibold text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                    aria-label="Reset reduced motion to system preference"
+                    title="Use system prefers-reduced-motion"
+                  >
+                    System
+                  </button>
+                )}
+              </div>
 
               <label className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
                 <input

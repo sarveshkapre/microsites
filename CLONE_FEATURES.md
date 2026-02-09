@@ -7,9 +7,22 @@
 - Gaps found during codebase exploration
 
 ## Candidate Features To Do
-- [ ] (P1) Add an explicit “Use system default” reset control for reduced-motion overrides in each demo (current UI supports persisted manual override but not one-click reset to system preference).
-- [ ] (P2) Add a lightweight local smoke-test script that boots one demo server and validates key page markers (to standardize runtime checks in automation runs).
+- [ ] (P1) [Selected] Add an explicit “Use system default” reset control for reduced-motion overrides in each demo (current UI supports persisted manual override but not one-click reset to system preference).
+  - Score: impact high | effort low | strategic fit high | differentiation medium | risk low | confidence high
+- [ ] (P1) [Selected] Add stable page markers for smoke checks (e.g. `data-microsite="<id>"`) across all demos.
+  - Score: impact high | effort low | strategic fit high | differentiation low | risk low | confidence high
+- [ ] (P1) [Selected] Enforce the Vite bundle budget gate in CI (separate job that builds Vite workspaces then runs `npm run check:bundles`).
+  - Score: impact high | effort low | strategic fit high | differentiation low | risk low | confidence high
+- [ ] (P2) [Selected] Add a lightweight local smoke-test script that boots one demo server and validates key page markers (to standardize runtime checks in automation runs).
+  - Score: impact medium | effort medium | strategic fit high | differentiation low | risk medium | confidence medium
 - [ ] (P2) Remove duplicate build work in `npm run verify` (currently both `build:all` and `build:pages`) while preserving deployment safety.
+  - Score: impact medium | effort low | strategic fit medium | differentiation low | risk low | confidence medium
+- [ ] (P3) Deduplicate per-app `usePrefersReducedMotion` hooks into `packages/controls` (or `packages/motion`) to reduce drift.
+  - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk medium | confidence medium
+- [ ] (P3) Add gallery thumbnails for each microsite (generated + committed or built-time) to make the index feel less “listy”.
+  - Score: impact medium | effort high | strategic fit medium | differentiation medium | risk medium | confidence low
+- [ ] (P3) Add `visibilitychange` / offscreen pausing for always-on effects (cursor spotlight, GSAP pinned stages, etc.) to cut idle CPU/GPU.
+  - Score: impact medium | effort medium | strategic fit high | differentiation low | risk medium | confidence medium
 
 ## Implemented
 - [x] (2026-02-09) Replaced `apps/dataviz-scrolly` Recharts runtime with a lightweight SVG chart implementation and removed `recharts` dependency.

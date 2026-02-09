@@ -294,6 +294,7 @@ export function DataVizScrollyDemo() {
   const [reducedMotionOverride, setReducedMotionOverride] =
     usePersistedNullableBoolean("microsites:dataviz-scrolly:reduced-motion");
   const reducedMotion = reducedMotionOverride ?? prefersReducedMotion;
+  const reducedMotionUsesSystem = reducedMotionOverride === null;
   const [perfMode, setPerfMode] = usePersistedBoolean(
     "microsites:dataviz-scrolly:perf-mode",
   );
@@ -326,7 +327,11 @@ export function DataVizScrollyDemo() {
   const active = chapters[activeIndex] ?? chapters[0]!;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white text-zinc-950 dark:from-black dark:to-zinc-950 dark:text-zinc-50">
+    <div
+      className="min-h-screen bg-gradient-to-b from-zinc-50 to-white text-zinc-950 dark:from-black dark:to-zinc-950 dark:text-zinc-50"
+      data-testid="microsite-root"
+      data-microsite="dataviz-scrolly"
+    >
       <div className="mx-auto w-full max-w-6xl px-6 py-10">
         <header className="flex flex-col gap-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -345,15 +350,32 @@ export function DataVizScrollyDemo() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <label className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
-                <input
-                  type="checkbox"
-                  className="accent-zinc-900 dark:accent-white"
-                  checked={reducedMotion}
-                  onChange={(e) => setReducedMotionOverride(e.target.checked)}
-                />
-                Reduced motion
-              </label>
+              <div className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
+                <label className="flex cursor-pointer items-center gap-2">
+                  <input
+                    type="checkbox"
+                    className="accent-zinc-900 dark:accent-white"
+                    checked={reducedMotion}
+                    onChange={(e) => setReducedMotionOverride(e.target.checked)}
+                  />
+                  Reduced motion
+                </label>
+                {reducedMotionUsesSystem ? (
+                  <span className="rounded-full border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-[11px] font-semibold text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200">
+                    System
+                  </span>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setReducedMotionOverride(null)}
+                    className="rounded-full border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-[11px] font-semibold text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                    aria-label="Reset reduced motion to system preference"
+                    title="Use system prefers-reduced-motion"
+                  >
+                    System
+                  </button>
+                )}
+              </div>
 
               <label className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
                 <input
