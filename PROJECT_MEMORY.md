@@ -81,3 +81,31 @@
 - `node scripts/build-pages.mjs` -> PASS
 - `npm run smoke -- --app gallery --port 3100 --timeout-ms 30000` -> PASS
 - `npm run smoke -- --app neon-cinematic --port 5201 --timeout-ms 30000` -> PASS
+
+## 2026-02-09 - Cycle 5 session
+
+### Decision 1: Add a CI smoke job and a curated `smoke:ci` script
+- Why:
+  - Lint/build passes can still miss runtime regressions (routing/base-path issues, missing critical DOM markers).
+  - Keeping a small curated smoke set (`gallery` + one Vite demo) makes CI runtime checks cheap and repeatable locally.
+- Evidence:
+  - Workflow job: `.github/workflows/ci.yml` (job `Smoke (dev servers)`).
+  - Script: `package.json` (`smoke:ci`).
+  - Local: `npm run smoke:ci` -> PASS (gallery + neon-cinematic).
+- Commit: `3d12f79`.
+- Confidence: high.
+- Trust label: trusted-local-runtime-signal.
+
+### Decision 2: Track modern platform primitives as preferred baselines for future demos
+- Why:
+  - Some effects are now better served by platform features (less JS, fewer runtime edge-cases) when available.
+  - Making these expectations explicit helps keep new demos aligned with a production-grade bar.
+- Evidence:
+  - Updated bounded scan with references for CSS scroll-driven animations and View Transitions: `docs/MARKET_SCAN.md`.
+- Commit: `145b73e`.
+- Confidence: medium.
+- Trust label: trusted-docs-update.
+
+### Verification Evidence
+- `npm run verify` -> PASS
+- `npm run smoke:ci` -> PASS
