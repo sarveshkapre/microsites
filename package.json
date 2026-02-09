@@ -35,6 +35,7 @@
     "dev:dataviz-scrolly": "npm run dev -w dataviz-scrolly",
     "build:dataviz-scrolly": "npm run build -w dataviz-scrolly",
     "lint:dataviz-scrolly": "npm run lint -w dataviz-scrolly",
-    "check:bundles": "node scripts/check-bundle-budgets.mjs"
+    "check:bundles": "node scripts/check-bundle-budgets.mjs",
+    "smoke": "node scripts/smoke.mjs"
   }
 }

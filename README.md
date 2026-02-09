@@ -42,6 +42,7 @@ npm run lint:all
 npm run build:all
 npm run check:bundles
 npm run verify
+npm run smoke -- --app gallery --port 3100
 ```
 
 `npm run verify` includes a Vite bundle budget gate (`500 kB` max per JS asset) before running the full Pages build.

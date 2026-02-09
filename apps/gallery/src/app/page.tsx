@@ -3,7 +3,10 @@ import { microsites, repoUrl } from "@/lib/microsites";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white dark:from-black dark:to-zinc-950">
+    <div
+      data-microsite="gallery"
+      className="min-h-screen bg-gradient-to-b from-zinc-50 to-white dark:from-black dark:to-zinc-950"
+    >
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-12">
         <header className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
