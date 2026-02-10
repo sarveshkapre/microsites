@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Expanded `docs/MARKET_SCAN.md` with modern platform primitives (CSS scroll-driven animations, View Transitions).
 - Centralized `usePrefersReducedMotion` into `@microsites/controls` and removed per-app duplicates.
 - Added `usePageVisibility` and paused expensive listeners/render loops when the page is backgrounded (where applicable).
+- Paused GSAP ScrollTrigger demos when backgrounded by sleeping the GSAP ticker (`premium-product`, `editorial-scrolly`, `neon-cinematic`).
 - `apps/gallery` cards now include lightweight poster thumbnails (pure CSS) for faster scanning.
 - `apps/gallery` now ships a skip-link + focus-visible baseline; CI enforces via `npm run check:a11y`.
 - Enabled View Transitions (progressive enhancement) across the Pages site; reduced-motion disables animations.

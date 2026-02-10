@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   usePersistedBoolean,
   usePersistedNullableBoolean,
+  usePageVisibility,
   usePrefersReducedMotion,
 } from "@microsites/controls";
 
@@ -61,10 +62,27 @@ export function NeonCinematicDemo() {
   const [perfMode, setPerfMode] = usePersistedBoolean(
     "microsites:neon-cinematic:perf-mode",
   );
+  const pageVisible = usePageVisibility();
   const rootRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const chapterRefs = useRef<Array<HTMLElement | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (reducedMotion) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // When backgrounded, pause GSAP's global ticker to avoid idle CPU/GPU churn.
+    // Always wake on cleanup to avoid leaving the app in a "sleeping" state.
+    if (pageVisible) {
+      gsap.ticker.wake();
+      ScrollTrigger.refresh();
+    } else {
+      gsap.ticker.sleep();
+    }
+    return () => gsap.ticker.wake();
+  }, [pageVisible, reducedMotion]);
 
   useEffect(() => {
     if (reducedMotion) return;
