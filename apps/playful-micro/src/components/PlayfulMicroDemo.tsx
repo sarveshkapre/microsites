@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   usePersistedBoolean,
   usePersistedNullableBoolean,
+  usePageVisibility,
   usePrefersReducedMotion,
 } from "@microsites/controls";
 
@@ -50,6 +51,7 @@ export function PlayfulMicroDemo() {
     "microsites:playful-micro:perf-mode",
   );
   const spotlightEnabled = !reducedMotion && !perfMode;
+  const pageVisible = usePageVisibility();
 
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
@@ -58,6 +60,7 @@ export function PlayfulMicroDemo() {
 
   useEffect(() => {
     if (!spotlightEnabled) return;
+    if (!pageVisible) return;
 
     const onMove = (e: PointerEvent) => {
       cursorX.set(e.clientX);
@@ -66,7 +69,7 @@ export function PlayfulMicroDemo() {
 
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
-  }, [cursorX, cursorY, spotlightEnabled]);
+  }, [cursorX, cursorY, pageVisible, spotlightEnabled]);
 
   const magneticRef = useRef<HTMLButtonElement | null>(null);
   const [magneticOffset, setMagneticOffset] = useState({ x: 0, y: 0 });

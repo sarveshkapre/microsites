@@ -14,6 +14,7 @@ import { MathUtils } from "three";
 import {
   usePersistedBoolean,
   usePersistedNullableBoolean,
+  usePageVisibility,
   usePrefersReducedMotion,
 } from "@microsites/controls";
 
@@ -119,9 +120,15 @@ export function WebglDomSyncDemo() {
   const [perfMode, setPerfMode] = usePersistedBoolean(
     "microsites:webgl-dom-sync:perf-mode",
   );
+  const pageVisible = usePageVisibility();
 
   const pages = sections.length + 0.25;
   const dpr: [number, number] = perfMode ? [1, 1.25] : [1, 1.75];
+  const frameLoop: "always" | "demand" | "never" = pageVisible
+    ? reducedMotion
+      ? "demand"
+      : "always"
+    : "never";
 
   return (
     <div
@@ -199,6 +206,7 @@ export function WebglDomSyncDemo() {
         <div className="fixed inset-0">
           <Canvas
             dpr={dpr}
+            frameloop={frameLoop}
             camera={{ position: [0, 0.2, 3.6], fov: 55 }}
             gl={{ antialias: !perfMode, powerPreference: "high-performance" }}
           >

@@ -33,6 +33,22 @@ export function usePrefersReducedMotion() {
   return prefersReducedMotion;
 }
 
+export function usePageVisibility() {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const update = () => setIsVisible(document.visibilityState !== "hidden");
+    update();
+
+    document.addEventListener("visibilitychange", update, { passive: true });
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+
+  return isVisible;
+}
+
 function readStorage(key) {
   if (typeof window === "undefined") return null;
   try {

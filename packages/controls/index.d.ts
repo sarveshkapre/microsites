@@ -2,6 +2,8 @@ import type { Dispatch, SetStateAction } from "react";
 
 export declare function usePrefersReducedMotion(): boolean;
 
+export declare function usePageVisibility(): boolean;
+
 export declare function usePersistedBoolean(
   key: string,
   fallbackValue?: boolean,
