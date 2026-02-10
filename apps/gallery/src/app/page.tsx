@@ -3,7 +3,9 @@ import { microsites, repoUrl } from "@/lib/microsites";
 
 export default function Home() {
   return (
-    <div
+    <main
+      id="main"
+      tabIndex={-1}
       data-microsite="gallery"
       className="min-h-screen bg-gradient-to-b from-zinc-50 to-white dark:from-black dark:to-zinc-950"
     >
@@ -172,6 +174,6 @@ export default function Home() {
           </div>
         </footer>
       </div>
-    </div>
+    </main>
   );
 }

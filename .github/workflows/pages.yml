@@ -29,6 +29,8 @@ jobs:
         run: node scripts/build-pages.mjs
       - name: Bundle budgets
         run: npm run check:bundles
+      - name: A11y bar checks
+        run: npm run check:a11y
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
