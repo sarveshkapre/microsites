@@ -17,4 +17,4 @@ npm run dev:playful-micro
 
 ## Key files
 - `src/components/PlayfulMicroDemo.tsx` - main demo + motion/perf controls
-- `src/lib/usePrefersReducedMotion.ts` - reduced-motion hook
+- Reduced-motion hook: `@microsites/controls` (`usePrefersReducedMotion`)

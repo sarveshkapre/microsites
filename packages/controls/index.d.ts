@@ -1,5 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 
+export declare function usePrefersReducedMotion(): boolean;
+
 export declare function usePersistedBoolean(
   key: string,
   fallbackValue?: boolean,

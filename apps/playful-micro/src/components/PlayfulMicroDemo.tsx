@@ -4,8 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   usePersistedBoolean,
   usePersistedNullableBoolean,
+  usePrefersReducedMotion,
 } from "@microsites/controls";
-import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
 const repoUrl = "https://github.com/sarveshkapre/microsites" as const;
 

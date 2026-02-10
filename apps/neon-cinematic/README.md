@@ -15,4 +15,4 @@ npm run dev:neon-cinematic
 
 ## Key files
 - `src/components/NeonCinematicDemo.tsx` — main demo
-- `src/lib/usePrefersReducedMotion.ts` — reduced-motion hook
+- Reduced-motion hook: `@microsites/controls` (`usePrefersReducedMotion`)

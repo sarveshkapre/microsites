@@ -17,4 +17,4 @@ npm run dev:dataviz-scrolly
 
 ## Key files
 - `src/components/DataVizScrollyDemo.tsx` - main demo + motion/perf controls
-- `src/lib/usePrefersReducedMotion.ts` - reduced-motion hook
+- Reduced-motion hook: `@microsites/controls` (`usePrefersReducedMotion`)

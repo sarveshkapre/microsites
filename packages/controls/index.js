@@ -6,6 +6,33 @@ function readStoredBoolean(rawValue) {
   return null;
 }
 
+export function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (typeof window.matchMedia !== "function") return;
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    onChange();
+
+    // Some older engines only support addListener/removeListener.
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", onChange);
+      return () => mediaQuery.removeEventListener("change", onChange);
+    }
+
+    // eslint-disable-next-line deprecation/deprecation
+    mediaQuery.addListener(onChange);
+    // eslint-disable-next-line deprecation/deprecation
+    return () => mediaQuery.removeListener(onChange);
+  }, []);
+
+  return prefersReducedMotion;
+}
+
 function readStorage(key) {
   if (typeof window === "undefined") return null;
   try {

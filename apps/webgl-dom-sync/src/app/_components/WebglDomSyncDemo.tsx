@@ -14,8 +14,8 @@ import { MathUtils } from "three";
 import {
   usePersistedBoolean,
   usePersistedNullableBoolean,
+  usePrefersReducedMotion,
 } from "@microsites/controls";
-import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 type Section = {
   id: string;

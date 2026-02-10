@@ -4,8 +4,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   usePersistedBoolean,
   usePersistedNullableBoolean,
+  usePrefersReducedMotion,
 } from "@microsites/controls";
-import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
 type Scene = {
   id: string;

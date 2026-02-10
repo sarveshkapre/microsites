@@ -18,4 +18,4 @@ Open the printed local URL (defaults to `http://localhost:3000` when run standal
 
 ## Key files
 - `src/app/_components/PremiumProductDemo.tsx` - main demo + motion/perf controls
-- `src/lib/usePrefersReducedMotion.ts` - reduced-motion hook
+- Reduced-motion hook: `@microsites/controls` (`usePrefersReducedMotion`)

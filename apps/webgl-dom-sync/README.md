@@ -15,5 +15,4 @@ npm run dev:webgl-dom-sync
 
 ## Key files
 - `src/app/_components/WebglDomSyncDemo.tsx` — main demo
-- `src/lib/usePrefersReducedMotion.ts` — reduced-motion hook
-
+- Reduced-motion hook: `@microsites/controls` (`usePrefersReducedMotion`)

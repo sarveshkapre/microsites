@@ -7,18 +7,26 @@
 - Gaps found during codebase exploration
 
 ## Candidate Features To Do
+- [ ] (P1) Unify `usePrefersReducedMotion` (and related env hooks) in `packages/controls` and delete per-app duplicates to prevent drift.
+  - Score: impact medium | effort low | strategic fit high | differentiation low | risk low | confidence high
+- [ ] (P1) Gallery: add lightweight “poster” thumbnails (pure CSS, deterministic per microsite) so the index scans like a product, not a list.
+  - Score: impact high | effort medium | strategic fit high | differentiation medium | risk low | confidence medium
+- [ ] (P1) Add an accessibility baseline gate:
+  - Skip-link + focus-visible styling (at least gallery).
+  - `npm run check:a11y` wired into `verify` and CI/Pages builds.
+  - Score: impact medium | effort medium | strategic fit high | differentiation low | risk low | confidence medium
+- [ ] (P2) Add a shared page-visibility hook and pause expensive loops when backgrounded (rAF/WebGL/always-on effects).
+  - Score: impact medium | effort medium | strategic fit high | differentiation low | risk low | confidence medium
+- [ ] (P2) Enable View Transitions (progressive enhancement) across the Pages site and disable animations under `prefers-reduced-motion`.
+  - Score: impact medium | effort low | strategic fit medium | differentiation medium | risk low | confidence medium
 - [ ] (P2) Add per-app bundle budgets (thresholds differ by demo) while keeping a strict default.
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
 - [ ] (P3) Add a Next.js bundle size / report gate for the Next demos (keep Vite budgets strict, add a lighter Next guard).
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
-- [ ] (P3) Deduplicate per-app `usePrefersReducedMotion` hooks into `packages/controls` (or `packages/motion`) to reduce drift.
-  - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk medium | confidence medium
 - [ ] (P3) Add gallery thumbnails for each microsite (generated + committed or built-time) to make the index feel less “listy”.
   - Score: impact medium | effort high | strategic fit medium | differentiation medium | risk medium | confidence low
 - [ ] (P3) Add `visibilitychange` / offscreen pausing for always-on effects (cursor spotlight, GSAP pinned stages, etc.) to cut idle CPU/GPU.
   - Score: impact medium | effort medium | strategic fit high | differentiation low | risk medium | confidence medium
-- [ ] (P3) Add a minimal accessibility “bar” check in CI (axe-core pass on gallery home, focus-visible presence, skip-link).
-  - Score: impact medium | effort medium | strategic fit high | differentiation low | risk low | confidence low
 
 ## Implemented
 - [x] (2026-02-09) Expanded the bounded market scan with modern platform primitives (CSS scroll-driven animations, View Transitions).
