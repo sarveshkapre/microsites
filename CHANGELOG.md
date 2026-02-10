@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Expanded `docs/MARKET_SCAN.md` with modern platform primitives (CSS scroll-driven animations, View Transitions).
 - Centralized `usePrefersReducedMotion` into `@microsites/controls` and removed per-app duplicates.
 - Added `usePageVisibility` and paused expensive listeners/render loops when the page is backgrounded (where applicable).
+- `apps/gallery` cards now include lightweight poster thumbnails (pure CSS) for faster scanning.
 - Persisted `Reduced motion` and `Perf mode` toggle states across all demo apps.
 - Added a one-click `System` reset control for reduced-motion overrides across all demos.
 - Added stable `data-microsite` page markers to all demos to enable lightweight smoke checks.

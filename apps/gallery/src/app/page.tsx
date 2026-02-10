@@ -66,13 +66,40 @@ export default function Home() {
           {microsites.map((site) => (
             <div
               key={site.id}
-              className="group rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950"
+              className="group rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0 motion-reduce:transition-none dark:border-zinc-800 dark:bg-zinc-950"
             >
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <div className="text-base font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+              <div
+                className={[
+                  "relative mb-4 h-28 overflow-hidden rounded-xl border border-zinc-200 bg-gradient-to-br dark:border-zinc-800",
+                  site.poster.gradient,
+                ].join(" ")}
+              >
+                <div className="absolute inset-0 opacity-70 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.7),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.35),transparent_55%)] dark:opacity-40 dark:bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.18),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.10),transparent_55%)]" />
+                <div className="absolute inset-0 opacity-[0.12] bg-[linear-gradient(to_right,rgba(0,0,0,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.08)_1px,transparent_1px)] [background-size:18px_18px] dark:opacity-[0.18]" />
+
+                <div className="relative z-10 flex h-full flex-col justify-between p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-zinc-800 dark:text-zinc-200">
+                      <span
+                        className={[
+                          "inline-block size-2 rounded-full shadow-sm shadow-black/10",
+                          site.poster.accent,
+                        ].join(" ")}
+                      />
+                      {site.id}
+                    </div>
+                    <div className="grid size-8 place-items-center rounded-lg bg-white/70 text-sm font-semibold text-zinc-900 backdrop-blur dark:bg-black/30 dark:text-zinc-50">
+                      μ
+                    </div>
+                  </div>
+                  <div className="text-sm font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
                     {site.title}
                   </div>
+                </div>
+              </div>
+
+              <div className="flex items-start justify-between gap-3">
+                <div>
                   <div className="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
                     {site.description}
                   </div>
