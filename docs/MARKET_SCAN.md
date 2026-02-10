@@ -28,3 +28,15 @@ MDN scroll-driven animations: https://developer.mozilla.org/en-US/docs/Web/CSS/C
 MDN View Transitions API: https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API
 Chrome Developers View Transitions: https://developer.chrome.com/docs/web-platform/view-transitions/
 ```
+
+## 2026-02-10
+
+### Notes (bounded)
+- Cross-document View Transitions are opt-in on both pages. The simplest Pages-wide enablement is `@view-transition { navigation: auto; }`.
+- Treat this as progressive enhancement and keep reduced-motion safe:
+  Under `prefers-reduced-motion`, disable View Transition animations via the `::view-transition-*` pseudo-elements.
+
+### References
+```text
+Chrome Developers: cross-document view transitions: https://developer.chrome.com/docs/web-platform/view-transitions/cross-document
+```

@@ -1,5 +1,69 @@
 # Project Memory
 
+## 2026-02-10 - Cycle 1 session
+
+### Decision 1: Centralize environment hooks in `@microsites/controls`
+- Why:
+  - Reduced-motion detection was duplicated across every microsite, increasing drift risk.
+  - Page visibility is a cheap, high-signal lever for reducing idle CPU/GPU in interactive demos.
+- Evidence:
+  - `usePrefersReducedMotion`: `packages/controls/index.js`, `packages/controls/index.d.ts`; per-app copies removed.
+  - `usePageVisibility`: `packages/controls/index.js`, `packages/controls/index.d.ts`; used to pause background loops.
+  - Local validation:
+    - `npm run lint -w premium-product && npm run lint -w editorial-scrolly && npm run lint -w webgl-dom-sync && npm run lint -w neon-cinematic && npm run lint -w playful-micro && npm run lint -w dataviz-scrolly` -> PASS
+    - `npm run lint -w webgl-dom-sync && npm run lint -w playful-micro` -> PASS
+- Commit: `e796ac2`, `3cbf8a7`.
+- Confidence: high.
+- Trust label: trusted-local-verification.
+- Follow-up:
+  - Consider pausing GSAP timelines/ScrollTrigger contexts when backgrounded for the pinned-scroll demos.
+
+### Decision 2: Add an accessibility baseline gate (skip-link + focus-visible)
+- Why:
+  - The gallery is the product front door; it should have a minimal a11y bar that never regresses.
+  - A static HTML/CSS gate is cheaper than a full browser-based audit while still catching common misses.
+- Evidence:
+  - Skip link + target: `apps/gallery/src/app/layout.tsx`, `apps/gallery/src/app/page.tsx`.
+  - Focus-visible styling: `apps/gallery/src/app/globals.css`.
+  - Gate: `scripts/check-a11y-bar.mjs`, root script `check:a11y`, wired into CI/Pages workflows.
+  - Local validation: `npm run build:pages && npm run check:a11y` -> PASS.
+- Commit: `dd9e854`.
+- Confidence: high.
+- Trust label: trusted-local-runtime-signal.
+- Follow-up:
+  - Expand the gate to one microsite route (not just gallery) once we decide the minimal common a11y contract.
+
+### Decision 3: Make the gallery scan like a product via “poster” thumbnails (no assets)
+- Why:
+  - Gallery cards were readable but “listy”; posters improve information scent without adding licensed assets or screenshot pipelines.
+- Evidence:
+  - `apps/gallery/src/app/page.tsx`, `apps/gallery/src/lib/microsites.ts`.
+  - Local build: `npm run build -w gallery` -> PASS.
+- Commit: `4212755`.
+- Confidence: medium.
+- Trust label: trusted-local-build-signal.
+- Follow-up:
+  - If we want real thumbnails later, add a build-time generator (Playwright) and track the assets in `docs/LICENSES.md` if any third-party content is ever introduced.
+
+### Decision 4: Enable View Transitions across the Pages site (progressive enhancement)
+- Why:
+  - Provides visible navigation polish with minimal code and good reduced-motion story.
+  - Aligns with the repo’s market-scan baseline for “modern platform primitives”.
+- Evidence:
+  - `@view-transition { navigation: auto; }` + reduced-motion opt-out via `::view-transition-*` pseudo-elements across each app stylesheet.
+  - Local builds: `npm run build -w gallery` -> PASS; `npm run build -w neon-cinematic` -> PASS.
+- Commit: `b6d69dc`.
+- Confidence: medium.
+- Trust label: trusted-local-build-signal.
+
+### Verification Evidence
+- `npm run lint -w premium-product && npm run lint -w editorial-scrolly && npm run lint -w webgl-dom-sync && npm run lint -w neon-cinematic && npm run lint -w playful-micro && npm run lint -w dataviz-scrolly` -> PASS
+- `npm run build -w gallery` -> PASS
+- `npm run build:pages` -> PASS
+- `npm run check:a11y` -> PASS
+- `npm run verify` -> PASS
+- `npm run smoke:ci` -> PASS
+
 ## 2026-02-09 - Cycle 2 session
 
 ### Decision 1: Replace `dataviz-scrolly` Recharts runtime with a custom SVG chart renderer
