@@ -18,6 +18,22 @@
 - Follow-up:
   - Consider pausing GSAP timelines/ScrollTrigger contexts when backgrounded for the pinned-scroll demos.
 
+### Decision 1b: Pause GSAP ScrollTrigger demos when backgrounded
+- Why:
+  - ScrollTrigger-powered pages can keep GSAP's ticker active even when the tab is hidden, which is wasted work.
+  - Sleeping the GSAP ticker on `document.visibilitychange` is a small, safe win that doesn't affect normal foreground behavior.
+- Evidence:
+  - `usePageVisibility` is used to sleep/wake the ticker + refresh triggers on resume:
+    - `apps/premium-product/src/app/_components/PremiumProductDemo.tsx`
+    - `apps/editorial-scrolly/src/app/_components/EditorialScrollyDemo.tsx`
+    - `apps/neon-cinematic/src/components/NeonCinematicDemo.tsx`
+  - Local validation: `npm run verify` -> PASS.
+- Commit: `ebd746d`.
+- Confidence: high.
+- Trust label: trusted-local-verification.
+- Follow-up:
+  - If we ever have multiple GSAP-heavy effects on one page, consider disabling/enabling only the relevant `ScrollTrigger` instances rather than sleeping the global ticker.
+
 ### Decision 2: Add an accessibility baseline gate (skip-link + focus-visible)
 - Why:
   - The gallery is the product front door; it should have a minimal a11y bar that never regresses.

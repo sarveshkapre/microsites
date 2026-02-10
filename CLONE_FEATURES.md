@@ -13,14 +13,14 @@
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
 - [ ] (P3) Add gallery thumbnails for each microsite (generated + committed or built-time) to make the index feel less “listy”.
   - Score: impact medium | effort high | strategic fit medium | differentiation medium | risk medium | confidence low
-- [ ] (P3) Add `visibilitychange` / offscreen pausing for always-on effects (cursor spotlight, GSAP pinned stages, etc.) to cut idle CPU/GPU.
-  - Score: impact medium | effort medium | strategic fit high | differentiation low | risk medium | confidence medium
 
 ## Implemented
 - [x] (2026-02-10) Centralized `usePrefersReducedMotion` into `@microsites/controls` and deleted per-app hook copies.
   Evidence: `packages/controls/index.js`, `packages/controls/index.d.ts`; local lint: `npm run lint -w premium-product && npm run lint -w editorial-scrolly && npm run lint -w webgl-dom-sync && npm run lint -w neon-cinematic && npm run lint -w playful-micro && npm run lint -w dataviz-scrolly` (PASS).
 - [x] (2026-02-10) Added `usePageVisibility` and used it to pause backgrounded loops (WebGL `frameloop`, cursor spotlight listener).
   Evidence: `packages/controls/index.js`, `apps/webgl-dom-sync/src/app/_components/WebglDomSyncDemo.tsx`, `apps/playful-micro/src/components/PlayfulMicroDemo.tsx`; local lint: `npm run lint -w webgl-dom-sync && npm run lint -w playful-micro` (PASS).
+- [x] (2026-02-10) Paused GSAP ScrollTrigger demos when backgrounded by sleeping the GSAP ticker.
+  Evidence: `apps/premium-product/src/app/_components/PremiumProductDemo.tsx`, `apps/editorial-scrolly/src/app/_components/EditorialScrollyDemo.tsx`, `apps/neon-cinematic/src/components/NeonCinematicDemo.tsx`; local: `npm run verify` (PASS).
 - [x] (2026-02-10) Gallery cards now include lightweight poster thumbnails (pure CSS) to improve scanability.
   Evidence: `apps/gallery/src/app/page.tsx`, `apps/gallery/src/lib/microsites.ts`; local build: `npm run build -w gallery` (PASS).
 - [x] (2026-02-10) Added skip-link + focus-visible baseline checks and enforced them in CI/Pages builds.
