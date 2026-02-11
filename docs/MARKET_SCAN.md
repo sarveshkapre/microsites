@@ -40,3 +40,29 @@ Chrome Developers View Transitions: https://developer.chrome.com/docs/web-platfo
 ```text
 Chrome Developers: cross-document view transitions: https://developer.chrome.com/docs/web-platform/view-transitions/cross-document
 ```
+
+## 2026-02-11
+
+### Bounded competitor/tool scan (product baseline)
+- Visual builders (Framer/Webflow) continue to set expectation that teams can ship high-polish scroll scenes quickly, with layered parallax, pinned storytelling, and text/visual sync.
+- Motion toolkits continue to treat reduced-motion as a first-class API, not an afterthought.
+- 3D tooling now exposes explicit performance diagnostics (frame time + memory style signals), reinforcing that WebGL demos need measurable perf controls, not just visual effects.
+
+### Gap map vs this repo
+- Missing:
+  - No critical missing items in the current baseline set after adding Next.js + Vite bundle gates.
+- Weak:
+  - Runtime smoke coverage still samples only a subset of demos (currently gallery + one Next demo + one Vite demo).
+- Parity:
+  - Reduced-motion + manual overrides are implemented across all demos.
+  - Perf-mode toggles are implemented across all demos.
+- Differentiator opportunities:
+  - Keep shipping lightweight, documented patterns with explicit fallback/perf knobs rather than visual-only demos.
+
+### References
+```text
+Framer University (scroll effect baseline examples): https://framer.university/blog/11-scroll-effects-you-can-create-with-framer
+Motion docs (`useReducedMotion`): https://motion.dev/docs/react-use-reduced-motion
+Webflow Accessibility checklist (reduced motion): https://webflow.com/accessibility/checklist/task/reduced-motion
+Spline docs (Performance Panel): https://docs.spline.design/doc/performance-panel/docQvB0W7fJm
+```

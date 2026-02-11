@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Local smoke script that boots a dev server and validates `data-microsite` markers: `scripts/smoke.mjs` + root `smoke`.
 - `docs/MARKET_SCAN.md` with bounded UX baseline expectations and reference links.
 - Session memory/incident logs: `PROJECT_MEMORY.md`, `INCIDENTS.md`.
+- `apps/webgl-dom-sync`: split heavy `Canvas` stage into a dynamically-loaded component (`WebglScrollStage`) to defer 3D runtime on initial route load.
 
 ### Changed
 - Added perf mode toggles to `premium-product`, `editorial-scrolly`, `playful-micro`, and `dataviz-scrolly`.
@@ -42,6 +43,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `npm run verify` now includes `npm run check:bundles` before the Pages build stage.
 - Added `data-microsite` markers to gallery and Vite HTML entrypoints for pre-hydration smoke checks.
 - CI now runs the Pages build plus bundle budgets gate; Pages deploy also enforces bundle budgets.
+- Replaced the bundle budget checker with per-app entrypoint JS budgets across both Next.js (`out/index.html` script graph) and Vite (`dist/index.html` script graph).
+- Tightened budget policy with explicit app-level thresholds (`scripts/check-bundle-budgets.mjs`) while keeping a strict default budget.
+- `smoke:ci` now includes a Next microsite runtime check (`premium-product`) in addition to gallery + Vite coverage.
+- Expanded `docs/MARKET_SCAN.md` with a 2026-02-11 bounded tool scan and updated gap map.
 
 ## [0.1.0] - 2026-02-01
 ### Added

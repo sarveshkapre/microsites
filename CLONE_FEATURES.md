@@ -7,14 +7,40 @@
 - Gaps found during codebase exploration
 
 ## Candidate Features To Do
-- [ ] (P2) Add per-app bundle budgets (thresholds differ by demo) while keeping a strict default.
+- [ ] (P1) Tighten `webgl-dom-sync` Next entrypoint budget from `720 kB` to `620 kB` after two stable runs.
+  - Score: impact high | effort low | strategic fit high | differentiation low | risk medium | confidence medium
+- [ ] (P1) Expand a11y bar checks beyond gallery to one demo route (`premium-product`) for skip-link/focus-visible parity.
+  - Score: impact high | effort medium | strategic fit high | differentiation low | risk low | confidence high
+- [ ] (P2) Add CI budget trend reporting (current vs previous commit) for `check:bundles` to make regressions obvious in logs.
+  - Score: impact medium | effort medium | strategic fit high | differentiation medium | risk low | confidence medium
+- [ ] (P2) Add a shared “live deployment URL checker” for gallery metadata to catch stale links automatically.
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
-- [ ] (P3) Add a Next.js bundle size / report gate for the Next demos (keep Vite budgets strict, add a lighter Next guard).
+- [ ] (P2) Add chart annotations/callouts to `dataviz-scrolly` with perf-mode fallbacks.
+  - Score: impact medium | effort medium | strategic fit high | differentiation medium | risk low | confidence medium
+- [ ] (P2) Add a small smoke target for `editorial-scrolly` to improve Next runtime coverage.
+  - Score: impact medium | effort low | strategic fit high | differentiation low | risk low | confidence high
+- [ ] (P2) Consolidate repeated demo header controls into a shared component in `packages/controls`.
+  - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk medium | confidence medium
+- [ ] (P3) Add a “motion contract” static check ensuring each app declares reduced-motion + perf-mode controls in README.
   - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk low | confidence medium
-- [ ] (P3) Add gallery thumbnails for each microsite (generated + committed or built-time) to make the index feel less “listy”.
+- [ ] (P3) Generate real gallery preview thumbnails via Playwright at build time (with cache/commit strategy).
   - Score: impact medium | effort high | strategic fit medium | differentiation medium | risk medium | confidence low
+- [ ] (P3) Add optional idle-prefetch for deferred WebGL stage to reduce first interaction delay without inflating initial payload.
+  - Score: impact medium | effort medium | strategic fit medium | differentiation medium | risk medium | confidence medium
+- [ ] (P3) Add reduced-motion visual snapshots (CI) for one Next demo + one Vite demo.
+  - Score: impact medium | effort medium | strategic fit medium | differentiation low | risk medium | confidence medium
+- [ ] (P3) Add a docs table summarizing per-app bundle budgets and rationale.
+  - Score: impact low | effort low | strategic fit medium | differentiation low | risk low | confidence high
 
 ## Implemented
+- [x] (2026-02-11) Replaced bundle checks with per-app entrypoint JS budgets across both Next.js and Vite outputs.
+  Evidence: `scripts/check-bundle-budgets.mjs`, `docs/PERF.md`, `README.md`; local: `npm run check:bundles` (PASS).
+- [x] (2026-02-11) Reduced `webgl-dom-sync` initial route payload by dynamically loading the heavy 3D stage.
+  Evidence: `apps/webgl-dom-sync/src/app/_components/WebglDomSyncDemo.tsx`, `apps/webgl-dom-sync/src/app/_components/WebglScrollStage.tsx`, `apps/webgl-dom-sync/README.md`; local: `npm run verify` (PASS).
+- [x] (2026-02-11) Expanded CI smoke coverage to include one Next demo microsite (`premium-product`).
+  Evidence: `package.json` (`smoke:ci`); local: `npm run smoke:ci` (PASS).
+- [x] (2026-02-11) Ran a bounded market scan refresh and updated gap map notes for current priorities.
+  Evidence: `docs/MARKET_SCAN.md`.
 - [x] (2026-02-10) Centralized `usePrefersReducedMotion` into `@microsites/controls` and deleted per-app hook copies.
   Evidence: `packages/controls/index.js`, `packages/controls/index.d.ts`; local lint: `npm run lint -w premium-product && npm run lint -w editorial-scrolly && npm run lint -w webgl-dom-sync && npm run lint -w neon-cinematic && npm run lint -w playful-micro && npm run lint -w dataviz-scrolly` (PASS).
 - [x] (2026-02-10) Added `usePageVisibility` and used it to pause backgrounded loops (WebGL `frameloop`, cursor spotlight listener).
@@ -61,6 +87,8 @@
 ## Insights
 - `Deploy GitHub Pages` cancellations on older commits are expected due workflow concurrency (`cancel-in-progress: true`), not build failures.
 - `npm run verify` runs `lint:all`, then `build:pages`, then `check:bundles`, then `check:a11y`.
+- `npm run check:bundles` now validates entrypoint JS totals per app using built HTML script graphs (`out/index.html` for Next, `dist/index.html` for Vite), not only Vite assets.
+- `webgl-dom-sync` no longer loads the large `@react-three/*` stage in the initial route bundle; current Next entrypoint total is `556.58 kB` with largest script `197.27 kB`.
 - `apps/dataviz-scrolly` JS payload dropped from `540.24 kB` to `205.27 kB` after replacing Recharts with SVG primitives.
 - Shared `@microsites/controls` hooks reduced repeated toggle state logic and made persisted control behavior consistent across all demos.
 - Vite dev servers may bind to `localhost` (IPv6) only on some machines; smoke checks should default to `http://localhost:<port>` instead of `127.0.0.1`.
