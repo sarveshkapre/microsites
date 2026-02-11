@@ -5,6 +5,7 @@
 - DOM narrative stays readable and scrolls normally (via `@react-three/drei` ScrollControls)
 - `prefers-reduced-motion` support + manual toggle
 - Optional perf mode (caps DPR / disables antialias)
+- Deferred loading for the heavy 3D stage to keep the initial route payload lighter
 
 ## Getting started
 From the repo root:
@@ -14,5 +15,6 @@ npm run dev:webgl-dom-sync
 ```
 
 ## Key files
-- `src/app/_components/WebglDomSyncDemo.tsx` — main demo
+- `src/app/_components/WebglDomSyncDemo.tsx` — shell UI + controls + dynamic stage loader
+- `src/app/_components/WebglScrollStage.tsx` — 3D stage (`Canvas`, `ScrollControls`, scene)
 - Reduced-motion hook: `@microsites/controls` (`usePrefersReducedMotion`)
