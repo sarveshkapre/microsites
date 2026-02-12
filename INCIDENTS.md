@@ -12,3 +12,14 @@
   - Prefer `localhost` (or an explicit host param) for local dev-server smoke checks; do not hardcode `127.0.0.1`.
   - Treat cancelled superseded deploy runs as expected unless latest run fails.
   - Keep `npm run verify` and bundle-budget checks green before pushing to `main`.
+
+### 2026-02-12T20:01:19Z | Codex execution failure
+- Date: 2026-02-12T20:01:19Z
+- Trigger: Codex execution failure
+- Impact: Repo session did not complete cleanly
+- Root Cause: codex exec returned a non-zero status
+- Fix: Captured failure logs and kept repository in a recoverable state
+- Prevention Rule: Re-run with same pass context and inspect pass log before retrying
+- Evidence: pass_log=logs/20260212-101456-microsites-cycle-2.log
+- Commit: pending
+- Confidence: medium
