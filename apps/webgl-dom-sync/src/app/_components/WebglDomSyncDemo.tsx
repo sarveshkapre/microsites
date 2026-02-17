@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import {
+  DemoControlBar,
   usePersistedBoolean,
   usePersistedNullableBoolean,
   usePageVisibility,
@@ -96,53 +96,16 @@ export function WebglDomSyncDemo() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-2 text-sm font-medium text-zinc-100">
-              <label className="flex cursor-pointer items-center gap-2">
-                <input
-                  type="checkbox"
-                  className="accent-white"
-                  checked={reducedMotion}
-                  onChange={(e) => setReducedMotionOverride(e.target.checked)}
-                />
-                Reduced motion
-              </label>
-              {reducedMotionUsesSystem ? (
-                <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-semibold text-zinc-200">
-                  System
-                </span>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setReducedMotionOverride(null)}
-                  className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-semibold text-zinc-200 transition hover:bg-white/10"
-                  aria-label="Reset reduced motion to system preference"
-                  title="Use system prefers-reduced-motion"
-                >
-                  System
-                </button>
-              )}
-            </div>
-
-            <label className="flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-2 text-sm font-medium text-zinc-100">
-              <input
-                type="checkbox"
-                className="accent-white"
-                checked={perfMode}
-                onChange={(e) => setPerfMode(e.target.checked)}
-              />
-              Perf mode
-            </label>
-
-            <Link
-              href={repoUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-white/10 bg-black/40 px-4 py-2 text-sm font-medium text-zinc-100 transition hover:bg-white/10"
-            >
-              GitHub
-            </Link>
-          </div>
+          <DemoControlBar
+            reducedMotion={reducedMotion}
+            reducedMotionUsesSystem={reducedMotionUsesSystem}
+            onReducedMotionChange={setReducedMotionOverride}
+            onReducedMotionSystem={() => setReducedMotionOverride(null)}
+            perfMode={perfMode}
+            onPerfModeChange={setPerfMode}
+            repoUrl={repoUrl}
+            tone="dark"
+          />
         </div>
       </div>
 

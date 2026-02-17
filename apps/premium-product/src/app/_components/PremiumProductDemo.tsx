@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
+  DemoControlBar,
   usePersistedBoolean,
   usePersistedNullableBoolean,
   usePageVisibility,
@@ -145,53 +145,15 @@ export function PremiumProductDemo() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input
-                    type="checkbox"
-                    className="accent-zinc-900 dark:accent-white"
-                    checked={reducedMotion}
-                    onChange={(e) => setReducedMotionOverride(e.target.checked)}
-                  />
-                  Reduced motion
-                </label>
-                {reducedMotionUsesSystem ? (
-                  <span className="rounded-full border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-[11px] font-semibold text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200">
-                    System
-                  </span>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setReducedMotionOverride(null)}
-                    className="rounded-full border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-[11px] font-semibold text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-                    aria-label="Reset reduced motion to system preference"
-                    title="Use system prefers-reduced-motion"
-                  >
-                    System
-                  </button>
-                )}
-              </div>
-
-              <label className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50">
-                <input
-                  type="checkbox"
-                  className="accent-zinc-900 dark:accent-white"
-                  checked={perfMode}
-                  onChange={(e) => setPerfMode(e.target.checked)}
-                />
-                Perf mode
-              </label>
-
-              <Link
-                href={repoUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-900 shadow-sm transition hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 dark:hover:bg-zinc-900"
-              >
-                GitHub
-              </Link>
-            </div>
+            <DemoControlBar
+              reducedMotion={reducedMotion}
+              reducedMotionUsesSystem={reducedMotionUsesSystem}
+              onReducedMotionChange={setReducedMotionOverride}
+              onReducedMotionSystem={() => setReducedMotionOverride(null)}
+              perfMode={perfMode}
+              onPerfModeChange={setPerfMode}
+              repoUrl={repoUrl}
+            />
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
