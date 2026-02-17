@@ -54,6 +54,7 @@ npm run smoke:ci
 - Workflow: `.github/workflows/pages.yml`
 - Local build: `npm run build:pages` (outputs to `.pages-dist/`)
 - Live: `https://sarveshkapre.github.io/microsites/`
+- Runner setup: `docs/SELF_HOSTED_RUNNER.md` (repo uses self-hosted Actions runners)
 
 ## Rules of the road
 - Respect `prefers-reduced-motion` in every demo.

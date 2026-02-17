@@ -7,6 +7,8 @@ This repo deploys a combined static site to GitHub Pages via `.github/workflows/
 
 - Build script: `scripts/build-pages.mjs`
 - Live URL: `https://sarveshkapre.github.io/microsites/`
+- Workflow runner: self-hosted GitHub Actions runner (`runs-on: self-hosted`)
+- Runner setup instructions: `docs/SELF_HOSTED_RUNNER.md`
 
 ## Vercel (recommended)
 Create one Vercel project per app.

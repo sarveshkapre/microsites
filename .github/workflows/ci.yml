@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
@@ -34,7 +34,7 @@ jobs:
 
   smoke:
     name: Smoke (dev servers)
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
@@ -49,7 +49,7 @@ jobs:
 
   pages:
     name: Pages build + bundle budgets
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -64,3 +64,7 @@ jobs:
         run: npm run check:bundles
       - name: A11y bar checks
         run: npm run check:a11y
+      - name: Motion contract checks
+        run: npm run check:motion-contract
+      - name: Deploy URL checks
+        run: npm run check:deploy-urls

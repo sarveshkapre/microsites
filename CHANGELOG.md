@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `scripts/check-motion-contract.mjs` and wired it into `verify` to enforce reduced-motion + perf-mode README coverage in every app.
 - Updated core frontend/tooling packages to current patch releases (React 19.2.4, Framer Motion 12.34.x, Vite React plugin 5.1.4, and related type tooling).
 - Refreshed `docs/MARKET_SCAN.md`, `PRODUCT_ROADMAP.md`, `CLONE_FEATURES.md`, and `PROJECT_MEMORY.md` with 2026-02-17 platform-state and delivery updates.
+- Switched all GitHub Actions jobs to self-hosted runners and added runner bootstrap/validation docs (`docs/SELF_HOSTED_RUNNER.md`) plus local workflow-equivalent validation script (`npm run ci:self-hosted-local`).
 - Added perf mode toggles to `premium-product`, `editorial-scrolly`, `playful-micro`, and `dataviz-scrolly`.
 - Normalized README docs for touched apps and removed stale scaffold boilerplate.
 - Updated perf guidance docs and root README verification instructions.

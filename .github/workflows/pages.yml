@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,6 +31,10 @@ jobs:
         run: npm run check:bundles
       - name: A11y bar checks
         run: npm run check:a11y
+      - name: Motion contract checks
+        run: npm run check:motion-contract
+      - name: Deploy URL checks
+        run: npm run check:deploy-urls
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -38,7 +42,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

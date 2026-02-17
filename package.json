@@ -40,6 +40,7 @@
     "check:motion-contract": "node scripts/check-motion-contract.mjs",
     "check:deploy-urls": "node scripts/check-deploy-urls.mjs",
     "smoke": "node scripts/smoke.mjs",
-    "smoke:ci": "node scripts/smoke.mjs --app gallery --port 3100 --timeout-ms 30000 && node scripts/smoke.mjs --app premium-product --port 3101 --timeout-ms 30000 && node scripts/smoke.mjs --app editorial-scrolly --port 3102 --timeout-ms 30000 && node scripts/smoke.mjs --app neon-cinematic --port 5201 --timeout-ms 30000"
+    "smoke:ci": "node scripts/smoke.mjs --app gallery --port 3100 --timeout-ms 30000 && node scripts/smoke.mjs --app premium-product --port 3101 --timeout-ms 30000 && node scripts/smoke.mjs --app editorial-scrolly --port 3102 --timeout-ms 30000 && node scripts/smoke.mjs --app neon-cinematic --port 5201 --timeout-ms 30000",
+    "ci:self-hosted-local": "bash scripts/ci-self-hosted-local.sh"
   }
 }
