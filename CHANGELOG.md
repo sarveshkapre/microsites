@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `scripts/check-deploy-urls.mjs` and wired `check:deploy-urls` into `verify` to catch stale gallery deploy links.
 - Documented per-app entrypoint JS budgets in `docs/PERF.md` with runtime-specific rationale.
 - Added `scripts/check-motion-contract.mjs` and wired it into `verify` to enforce reduced-motion + perf-mode README coverage in every app.
+- Updated core frontend/tooling packages to current patch releases (React 19.2.4, Framer Motion 12.34.x, Vite React plugin 5.1.4, and related type tooling).
 - Added perf mode toggles to `premium-product`, `editorial-scrolly`, `playful-micro`, and `dataviz-scrolly`.
 - Normalized README docs for touched apps and removed stale scaffold boilerplate.
 - Updated perf guidance docs and root README verification instructions.
