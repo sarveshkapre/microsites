@@ -66,3 +66,39 @@ Motion docs (`useReducedMotion`): https://motion.dev/docs/react-use-reduced-moti
 Webflow Accessibility checklist (reduced motion): https://webflow.com/accessibility/checklist/task/reduced-motion
 Spline docs (Performance Panel): https://docs.spline.design/doc/performance-panel/docQvB0W7fJm
 ```
+
+## 2026-02-17
+
+### Current-world stack snapshot (official sources)
+- Next.js 16 is the current major and ships stronger defaults around App Router ergonomics and Turbopack workflows.
+- React 19 remains the active major baseline for modern app stacks in this repo.
+- Tailwind CSS v4 emphasizes lower rebuild latency and native cascade-layer usage, which supports our multi-app workspace ergonomics.
+- Vite 7.x is now the expected baseline for lightweight React microsite builds.
+
+### Browser/platform support snapshot
+- View Transitions API support is broad enough to keep as progressive enhancement (`~89%` global usage support).
+- `@view-transition` rule support trails slightly (`~81%` global), so CSS guardrails are still necessary.
+- CSS Scroll-driven Animations support is significant but not universal (`~78%` global), so JS fallback patterns remain required.
+
+### Implications for this repo
+- Keep View Transitions and scroll-driven effects as optional enhancements with explicit fallbacks.
+- Continue shipping reduced-motion and perf-mode controls as first-class UX requirements.
+- Keep bundle + runtime gates in CI because payload/perf regressions are still the fastest way microsites degrade.
+
+### Improvement queue update
+- Priority next:
+  - CI bundle trend deltas (`current` vs `previous`) in `check:bundles` logs.
+  - Reduced-motion visual snapshots for one Next app + one Vite app.
+  - Tighten `webgl-dom-sync` entry budget toward `620 kB` after two stable runs.
+
+### References
+```text
+Next.js 16 release: https://nextjs.org/blog/next-16
+React 19 announcement: https://react.dev/blog/2024/12/05/react-19
+Tailwind CSS v4 release: https://tailwindcss.com/blog/tailwindcss-v4
+Vite 7 release: https://vite.dev/blog/announcing-vite7
+View Transitions API support: https://caniuse.com/view-transitions
+@view-transition support: https://caniuse.com/mdn-css_at-rules_view-transition
+CSS scroll-driven animations support: https://caniuse.com/wf-scroll-driven-animations
+MDN Scroll-driven animations: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations
+```

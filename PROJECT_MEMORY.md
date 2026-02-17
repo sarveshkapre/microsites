@@ -1,5 +1,24 @@
 # Project Memory
 
+## 2026-02-17 - UI consistency + market alignment session
+
+### Recent Decisions
+- 2026-02-17 | Consolidate repeated demo controls into shared `DemoControlBar` | Aligns with `code/clone` UIUX rule for predictable control placement and reduces duplicated logic across six demos | Evidence: `packages/controls/index.js`, `packages/controls/index.d.ts`, six demo components | Commit: `98327fd` | Confidence: high | Trust label: trusted (local lint/build)
+- 2026-02-17 | Expand baseline a11y checks to `premium-product` | Skip-link/focus-visible parity should not be limited to gallery-only surfaces | Evidence: `apps/premium-product/src/app/layout.tsx`, `apps/premium-product/src/app/globals.css`, `scripts/check-a11y-bar.mjs` | Commit: `c471588` | Confidence: high | Trust label: trusted (local build/check)
+- 2026-02-17 | Add runtime and docs contracts to verification (`smoke:ci`, motion contract, deploy URLs) | Catch regressions in route boot, docs quality, and live-link health before deploy | Evidence: `package.json`, `scripts/check-motion-contract.mjs`, `scripts/check-deploy-urls.mjs` | Commits: `b578aae`, `3f4721a`, `97233a1` | Confidence: high | Trust label: trusted (local checks)
+- 2026-02-17 | Refresh market scan against current platform + framework state | Keep roadmap decisions tied to current browser support and stable framework releases | Evidence: `docs/MARKET_SCAN.md` (2026-02-17 section) | Commit: pending current session | Confidence: medium | Trust label: mixed (official web docs + local command output)
+
+### Verification Evidence
+- `npm run lint:all` -> PASS
+- `npm run build -w dataviz-scrolly` -> PASS
+- `npm run build -w webgl-dom-sync` -> PASS
+- `npm run build:pages && npm run check:a11y` -> PASS
+- `npm run smoke:ci` -> PASS
+- `npm run check:deploy-urls` -> PASS
+- `npm run check:motion-contract` -> PASS
+
+UIUX_CHECKLIST: PASS | flow=shared_controls_and_verification | desktop=validated_local_builds | mobile=responsive_layouts_preserved_no_breakpoint_regressions | a11y=skip_link_focus_visible_motion_contract | risk=low
+
 ## 2026-02-11 - Cycle 1 session
 
 ### Recent Decisions
