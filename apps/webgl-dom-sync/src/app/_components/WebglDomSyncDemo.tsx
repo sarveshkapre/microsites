@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   DemoControlBar,
   usePersistedBoolean,
@@ -13,9 +13,11 @@ import type { WebglSection } from "@/app/_components/WebglScrollStage";
 
 const repoUrl = "https://github.com/sarveshkapre/microsites" as const;
 
+const loadWebglScrollStage = () => import("./WebglScrollStage");
+
 const WebglScrollStage = dynamic(
   () =>
-    import("./WebglScrollStage").then((module) => ({
+    loadWebglScrollStage().then((module) => ({
       default: module.WebglScrollStage,
     })),
   {
@@ -65,6 +67,47 @@ export function WebglDomSyncDemo() {
     "microsites:webgl-dom-sync:perf-mode",
   );
   const pageVisible = usePageVisibility();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!pageVisible || reducedMotion) return;
+
+    const runtimeWindow = window as Window & {
+      requestIdleCallback?: (
+        callback: IdleRequestCallback,
+        options?: IdleRequestOptions,
+      ) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+
+    let cancelled = false;
+    const prefetch = () => {
+      if (cancelled) return;
+      void loadWebglScrollStage();
+    };
+
+    let timeoutHandle: number | null = null;
+    let idleHandle: number | null = null;
+
+    if (typeof runtimeWindow.requestIdleCallback === "function") {
+      idleHandle = runtimeWindow.requestIdleCallback(prefetch, { timeout: 1800 });
+    } else {
+      timeoutHandle = window.setTimeout(prefetch, 700);
+    }
+
+    return () => {
+      cancelled = true;
+      if (
+        idleHandle !== null &&
+        typeof runtimeWindow.cancelIdleCallback === "function"
+      ) {
+        runtimeWindow.cancelIdleCallback(idleHandle);
+      }
+      if (timeoutHandle !== null) {
+        window.clearTimeout(timeoutHandle);
+      }
+    };
+  }, [pageVisible, reducedMotion]);
 
   const pages = sections.length + 0.25;
   const dpr: [number, number] = perfMode ? [1, 1.25] : [1, 1.75];

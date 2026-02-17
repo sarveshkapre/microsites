@@ -6,6 +6,7 @@
 - `prefers-reduced-motion` support + manual toggle
 - Optional perf mode (caps DPR / disables antialias)
 - Deferred loading for the heavy 3D stage to keep the initial route payload lighter
+- Idle-prefetch for the deferred 3D stage to reduce first-interaction latency after initial paint
 
 ## Getting started
 From the repo root:
