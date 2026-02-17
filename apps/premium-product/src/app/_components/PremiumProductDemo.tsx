@@ -124,6 +124,8 @@ export function PremiumProductDemo() {
   return (
     <div
       ref={rootRef}
+      id="main"
+      tabIndex={-1}
       data-testid="microsite-root"
       data-microsite="premium-product"
       className="min-h-screen bg-gradient-to-b from-zinc-50 via-white to-zinc-50 text-zinc-950 dark:from-black dark:via-zinc-950 dark:to-black dark:text-zinc-50"

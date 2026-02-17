@@ -43,3 +43,37 @@ body {
     BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji",
     "Segoe UI Emoji";
 }
+
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  z-index: 60;
+  transform: translateY(-200%);
+  padding: 0.65rem 0.9rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--foreground);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .skip-link {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(10, 10, 10, 0.85);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+}
