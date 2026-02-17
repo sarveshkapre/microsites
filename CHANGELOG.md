@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Expanded `smoke:ci` runtime coverage with `editorial-scrolly` (additional Next.js route sanity check).
 - `apps/dataviz-scrolly` now renders chapter-aware chart annotations/callouts, with perf-mode fallback to fewer markers.
 - `apps/webgl-dom-sync` now idle-prefetches the deferred 3D stage (when visible + motion-enabled) to reduce first-interaction delay.
+- Added `scripts/check-deploy-urls.mjs` and wired `check:deploy-urls` into `verify` to catch stale gallery deploy links.
 - Added perf mode toggles to `premium-product`, `editorial-scrolly`, `playful-micro`, and `dataviz-scrolly`.
 - Normalized README docs for touched apps and removed stale scaffold boilerplate.
 - Updated perf guidance docs and root README verification instructions.
