@@ -38,6 +38,6 @@
     "check:bundles": "node scripts/check-bundle-budgets.mjs",
     "check:a11y": "node scripts/check-a11y-bar.mjs",
     "smoke": "node scripts/smoke.mjs",
-    "smoke:ci": "node scripts/smoke.mjs --app gallery --port 3100 --timeout-ms 30000 && node scripts/smoke.mjs --app premium-product --port 3101 --timeout-ms 30000 && node scripts/smoke.mjs --app neon-cinematic --port 5201 --timeout-ms 30000"
+    "smoke:ci": "node scripts/smoke.mjs --app gallery --port 3100 --timeout-ms 30000 && node scripts/smoke.mjs --app premium-product --port 3101 --timeout-ms 30000 && node scripts/smoke.mjs --app editorial-scrolly --port 3102 --timeout-ms 30000 && node scripts/smoke.mjs --app neon-cinematic --port 5201 --timeout-ms 30000"
   }
 }

@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Added a shared `DemoControlBar` primitive in `@microsites/controls` and refactored all demos to use one consistent reduced-motion/perf control pattern.
 - Expanded the a11y baseline to `premium-product` by adding skip-link + focus-visible support and enforcing it in `scripts/check-a11y-bar.mjs`.
+- Expanded `smoke:ci` runtime coverage with `editorial-scrolly` (additional Next.js route sanity check).
 - Added perf mode toggles to `premium-product`, `editorial-scrolly`, `playful-micro`, and `dataviz-scrolly`.
 - Normalized README docs for touched apps and removed stale scaffold boilerplate.
 - Updated perf guidance docs and root README verification instructions.
