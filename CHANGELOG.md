@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `apps/webgl-dom-sync` now idle-prefetches the deferred 3D stage (when visible + motion-enabled) to reduce first-interaction delay.
 - Added `scripts/check-deploy-urls.mjs` and wired `check:deploy-urls` into `verify` to catch stale gallery deploy links.
 - Documented per-app entrypoint JS budgets in `docs/PERF.md` with runtime-specific rationale.
+- Added `scripts/check-motion-contract.mjs` and wired it into `verify` to enforce reduced-motion + perf-mode README coverage in every app.
 - Added perf mode toggles to `premium-product`, `editorial-scrolly`, `playful-micro`, and `dataviz-scrolly`.
 - Normalized README docs for touched apps and removed stale scaffold boilerplate.
 - Updated perf guidance docs and root README verification instructions.

@@ -41,13 +41,14 @@ npm run dev:dataviz-scrolly
 npm run lint:all
 npm run build:all
 npm run check:bundles
+npm run check:motion-contract
 npm run verify
 npm run check:deploy-urls
 npm run smoke -- --app gallery --port 3100
 npm run smoke:ci
 ```
 
-`npm run verify` runs lint, the Pages build, per-app entrypoint bundle budgets (Next.js + Vite), the a11y bar checks, and gallery deploy URL validation.
+`npm run verify` runs lint, the Pages build, per-app entrypoint bundle budgets (Next.js + Vite), the a11y bar checks, the README motion contract check, and gallery deploy URL validation.
 
 ## Deploy (GitHub Pages)
 - Workflow: `.github/workflows/pages.yml`

@@ -12,7 +12,7 @@
     "lint": "npm run lint -w gallery",
     "lint:all": "npm run lint --workspaces --if-present",
     "build:all": "npm run build --workspaces --if-present",
-    "verify": "npm run lint:all && npm run build:pages && npm run check:bundles && npm run check:a11y && npm run check:deploy-urls",
+    "verify": "npm run lint:all && npm run build:pages && npm run check:bundles && npm run check:a11y && npm run check:motion-contract && npm run check:deploy-urls",
     "build:pages": "node scripts/build-pages.mjs",
     "dev:gallery": "npm run dev -w gallery",
     "build:gallery": "npm run build -w gallery",
@@ -37,6 +37,7 @@
     "lint:dataviz-scrolly": "npm run lint -w dataviz-scrolly",
     "check:bundles": "node scripts/check-bundle-budgets.mjs",
     "check:a11y": "node scripts/check-a11y-bar.mjs",
+    "check:motion-contract": "node scripts/check-motion-contract.mjs",
     "check:deploy-urls": "node scripts/check-deploy-urls.mjs",
     "smoke": "node scripts/smoke.mjs",
     "smoke:ci": "node scripts/smoke.mjs --app gallery --port 3100 --timeout-ms 30000 && node scripts/smoke.mjs --app premium-product --port 3101 --timeout-ms 30000 && node scripts/smoke.mjs --app editorial-scrolly --port 3102 --timeout-ms 30000 && node scripts/smoke.mjs --app neon-cinematic --port 5201 --timeout-ms 30000"
