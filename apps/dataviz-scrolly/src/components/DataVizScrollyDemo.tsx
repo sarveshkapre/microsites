@@ -15,11 +15,18 @@ import {
 const repoUrl = "https://github.com/sarveshkapre/microsites" as const;
 
 type Point = { x: number; y: number };
+type ChartAnnotation = {
+  id: string;
+  index: number;
+  label: string;
+};
+
 type Chapter = {
   id: string;
   eyebrow: string;
   title: string;
   body: string;
+  callout: string;
   series: Point[];
   color: string;
 };
@@ -61,6 +68,32 @@ function clamp(value: number, min: number, max: number) {
 
 function toFixedValue(value: number) {
   return Number.isInteger(value) ? `${value}` : value.toFixed(1);
+}
+
+function buildAnnotations(series: Point[], perfMode: boolean) {
+  if (series.length === 0) return [];
+
+  let maxIndex = 0;
+  let minIndex = 0;
+  for (let i = 1; i < series.length; i += 1) {
+    if (series[i]!.y > series[maxIndex]!.y) maxIndex = i;
+    if (series[i]!.y < series[minIndex]!.y) minIndex = i;
+  }
+
+  const candidates: ChartAnnotation[] = perfMode
+    ? [{ id: "peak", index: maxIndex, label: "Peak" }]
+    : [
+        { id: "peak", index: maxIndex, label: "Peak" },
+        { id: "trough", index: minIndex, label: "Trough" },
+        { id: "latest", index: series.length - 1, label: "Latest" },
+      ];
+
+  const seen = new Set<number>();
+  return candidates.filter((annotation) => {
+    if (seen.has(annotation.index)) return false;
+    seen.add(annotation.index);
+    return true;
+  });
 }
 
 function SimpleLineChart({
@@ -116,6 +149,10 @@ function SimpleLineChart({
 
   const hoveredPoint =
     hoveredIndex !== null && hoveredIndex >= 0 ? series[hoveredIndex] : null;
+  const annotations = useMemo(
+    () => buildAnnotations(series, perfMode),
+    [perfMode, series],
+  );
 
   const onPointerMove = (event: ReactPointerEvent<SVGSVGElement>) => {
     const target = event.currentTarget;
@@ -197,6 +234,72 @@ function SimpleLineChart({
         }
       />
 
+      {annotations.map((annotation) => {
+        const point = series[annotation.index];
+        if (!point) return null;
+
+        const pointX = xToPx(point.x);
+        const pointY = yToPx(point.y);
+        const bubbleWidth = 88;
+        const bubbleHeight = 26;
+        const bubbleX = clamp(
+          pointX + 10,
+          chartSize.padding.left + 8,
+          chartSize.width - chartSize.padding.right - bubbleWidth - 6,
+        );
+        const bubbleY = clamp(
+          pointY - 30,
+          chartSize.padding.top + 4,
+          chartSize.height - chartSize.padding.bottom - bubbleHeight - 4,
+        );
+
+        return (
+          <g
+            key={`${chapterId}-${annotation.id}`}
+            className={
+              reducedMotion || perfMode
+                ? ""
+                : "transition-[opacity,transform] duration-300"
+            }
+          >
+            <line
+              x1={pointX}
+              y1={pointY}
+              x2={bubbleX}
+              y2={bubbleY + bubbleHeight / 2}
+              stroke="rgba(241,245,249,0.65)"
+              strokeDasharray={perfMode ? "0" : "3 3"}
+            />
+            <circle
+              cx={pointX}
+              cy={pointY}
+              r={perfMode ? 3.5 : 4.5}
+              fill={color}
+              stroke="rgba(255,255,255,0.92)"
+              strokeWidth={2}
+            />
+            <rect
+              x={bubbleX}
+              y={bubbleY}
+              width={bubbleWidth}
+              height={bubbleHeight}
+              rx={8}
+              fill="rgba(9,9,11,0.86)"
+              stroke="rgba(255,255,255,0.12)"
+            />
+            <text
+              x={bubbleX + 8}
+              y={bubbleY + 17}
+              fill="rgba(241,245,249,0.95)"
+              fontSize="11"
+              fontWeight="600"
+            >
+              {annotation.label}: {toFixedValue(point.y)}
+            </text>
+          </g>
+        );
+      })}
+
       {hoveredPoint ? (
         <g>
           <line
@@ -260,6 +363,8 @@ export function DataVizScrollyDemo() {
         eyebrow: "Chapter 01",
         title: "Baseline: what does “normal” look like?",
         body: "Start with a stable chart and clear axes. Your first job is to build trust and legibility before you animate anything.",
+        callout:
+          "Use a stable baseline chapter to help readers calibrate before introducing change.",
         series: makeSeries(0),
         color: "#0ea5e9",
       },
@@ -268,6 +373,8 @@ export function DataVizScrollyDemo() {
         eyebrow: "Chapter 02",
         title: "Shift: introduce a clear change.",
         body: "Use scroll to switch datasets at chapter boundaries. Keep animation durations short and consistent.",
+        callout:
+          "Chapter transitions should feel like context changes, not dramatic effect demos.",
         series: makeSeries(2),
         color: "#22c55e",
       },
@@ -276,6 +383,8 @@ export function DataVizScrollyDemo() {
         eyebrow: "Chapter 03",
         title: "Volatility: tell a story with variance.",
         body: "Highlight what matters: label peaks, call out anomalies, and keep the chart readable on small screens.",
+        callout:
+          "Prioritize one or two callouts that explain variance and avoid visual overload.",
         series: makeSeries(5),
         color: "#f97316",
       },
@@ -284,6 +393,8 @@ export function DataVizScrollyDemo() {
         eyebrow: "Chapter 04",
         title: "Resolution: recap the takeaway.",
         body: "End with a summary that matches the visual evidence. Scrollytelling should feel like a guided analysis, not a magic trick.",
+        callout:
+          "Close with the latest value and trend direction so readers leave with one clear takeaway.",
         series: makeSeries(8),
         color: "#a855f7",
       },
@@ -326,6 +437,10 @@ export function DataVizScrollyDemo() {
   }, []);
 
   const active = chapters[activeIndex] ?? chapters[0]!;
+  const activeAnnotations = useMemo(
+    () => buildAnnotations(active.series, perfMode),
+    [active.series, perfMode],
+  );
 
   return (
     <div
@@ -412,8 +527,24 @@ export function DataVizScrollyDemo() {
                 <div className="font-semibold">Implementation note</div>
                 <div className="mt-1">
                   Chapter activation uses IntersectionObserver. The chart is pure
-                  SVG with a lightweight hover probe, and extra motion is
+                  SVG with annotation callouts + a lightweight hover probe, and
+                  extra motion is
                   disabled in reduced-motion/perf mode.
+                </div>
+              </div>
+
+              <div className="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm leading-6 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+                <div className="font-semibold">Narrative callouts</div>
+                <div className="mt-1">{active.callout}</div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {activeAnnotations.map((annotation) => (
+                    <span
+                      key={annotation.id}
+                      className="rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-xs font-semibold tracking-wide text-zinc-700 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300"
+                    >
+                      {annotation.label}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -475,8 +606,8 @@ export function DataVizScrollyDemo() {
             ))}
 
             <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-sm leading-6 text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-              Next: add annotations (callouts), multiple series, and a “focus
-              band” highlight on active ranges with low-cost fallbacks.
+              Next: add multi-series comparisons and confidence-band overlays
+              with low-cost fallbacks.
             </div>
           </div>
         </section>

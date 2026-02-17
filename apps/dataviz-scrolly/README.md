@@ -3,9 +3,9 @@
 `apps/dataviz-scrolly` is a data-viz scrollytelling demo:
 - Sticky line chart (custom lightweight SVG renderer)
 - Chapter-based narrative sections
-- Chapter boundaries swap datasets and highlight color
+- Chapter boundaries swap datasets, highlight color, and update chart callouts
 - `prefers-reduced-motion` support + manual toggle (persisted per device)
-- Perf mode toggle for lower-cost chart transitions (persisted per device)
+- Perf mode toggle for lower-cost chart transitions and fewer annotation markers (persisted per device)
 
 ## Getting started
 From the repo root:
